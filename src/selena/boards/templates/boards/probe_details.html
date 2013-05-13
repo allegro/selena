@@ -1,0 +1,4 @@
+<h5>Status: {{ fail_num }}/{{ total_num }}</h5>
+{% for case in cases %}
+    <p><strong>{{ case.agent_name }}{% if case.request_params_name %} ({{ case.request_params_name }}){% endif %}: </strong> {{ case.state }}</p>
+{% endfor %}

@@ -1,0 +1,3 @@
+{% for probe in probes %}
+    <span id="{{ probe.probe }}" class="hist-part{% if probe.color %} hist-err{% endif %}"{% if probe.color %} style="background: #{{ probe.color }};"{% endif %}></span>
+{% endfor %}

@@ -1,0 +1,21 @@
+<div class="pagination">
+    <ul>
+        {% if items.has_previous %}
+            <li><a href="{% if url_params %}?{{ url_params }}&{% else %}?{% endif %}page={{ items.previous_page_number }}">«</a></li>
+        {% endif %}
+        {% if items.paginator.num_pages > 10 and items.number > 6 %}
+            <li class="disabled"><a href="#">...</a></li>
+        {% endif %}
+        {% for p in items.paginator.page_range %}
+            {% if p >= items.number|add:"-5" and p <= items.number|add:"5" %}
+                <li class="{% if items.number == p %}active{% endif %}"><a href="{% if url_params %}?{{ url_params }}&{% else %}?{% endif %}page={{ p }}">{{ p }}</a></li>
+            {% endif %}
+        {% endfor %}
+        {% if items.paginator.num_pages > 10 and items.number <= items.paginator.num_pages|add:"-6" %}
+            <li class="disabled"><a href="#">...</a></li>
+        {% endif %}
+        {% if items.has_next %}
+            <li><a href="{% if url_params %}?{{ url_params }}&{% else %}?{% endif %}page={{ items.next_page_number }}">»</a></li>
+        {% endif %}
+    </ul>
+</div>

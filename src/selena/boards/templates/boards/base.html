@@ -1,0 +1,58 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Selena</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+        <link href="{% static "css/bootstrap-responsive.min.css" %}" rel="stylesheet">
+        <link href="{% static "css/jquery.alerts.css" %}" rel="stylesheet">
+        <link href="{% static "css/stylesheet.css" %}" rel="stylesheet">
+        {% block css %}{% endblock css %}
+        <script language="javascript" type="text/javascript" src="{% static "js/jquery-1.7.2.min.js" %}"></script>
+        <script language="javascript" type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
+        <script language="javascript" type="text/javascript" src="{% static "js/jquery.alerts.js" %}"></script>
+    	<script language="javascript" type="text/javascript" src="{% static "js/base.js" %}"></script>
+    	{% block javascript %}{% endblock javascript %}
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="navbar navbar-fixed-top navbar-inverse">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="brand" href="/">Selena</a>
+                    <div class="nav-collapse">
+                        <ul class="nav">
+                            {% for item in mainmenu_items %}
+                                <li><a href="{{ item.href }}">{{ item.name }}</a></li>
+                            {% endfor %}
+                            {% if boards|length > 0 %}
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manually defined <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        {% for board in boards %}
+                                            <li><a href="/manually-defined/{{ board.id }}">{{ board.name }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        </ul>
+                        <ul class="nav pull-right">
+                            {% for item in additionalmenu_items %}
+                                <li><a href="{{ item.href }}">{{ item.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            {% block content %}{% endblock content %}
+        </div>
+    </body>
+</html>

@@ -1,0 +1,224 @@
+{% extends "boards/base.html" %}
+{% load staticfiles %}
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="{% static "js/jquery.jqplot.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/plugins/jqplot.logAxisRenderer.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/plugins/jqplot.canvasTextRenderer.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/plugins/jqplot.canvasAxisLabelRenderer.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/plugins/jqplot.canvasAxisTickRenderer.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/plugins/jqplot.dateAxisRenderer.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/plugins/jqplot.categoryAxisRenderer.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/plugins/jqplot.barRenderer.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/show.js" %}"></script>
+{% endblock javascript %}
+
+{% block css %}
+    <link href="{% static "css/jquery.jqplot.min.css" %}" rel="stylesheet">
+{% endblock css %}
+
+{% block content %}
+    <div id="show-header">
+        <h1>{{ service.name }}</h1>
+
+        <div id="show-user-menu">
+            <a href="/history/{{ service.id }}" class="btn btn-info"><i class=" icon-calendar icon-white"></i> Full history</a>
+            <a href="/admin/services/service/{{ service.id }}" class="btn"><i class="icon-pencil"></i> Edit service</a>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span4">
+            <h3>Base info</h3>
+            <table class="table table-bordered">
+                <thead>
+                   <tr>
+                       <th>Param</th>
+                       <th>Value</th>
+                   </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Name</strong></td>
+                        <td>{{ service.name }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Url</strong></td>
+                        <td><a href="{{ service.url }}" target="_blank">{{ service.url }}</a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sensitivity</strong></td>
+                        <td>{{ service.sensitivity|floatformat:2 }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Expected response code</strong></td>
+                        <td>{{ service.response_code }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Perfomance issues time</strong></td>
+                        <td>{{ service.performance_issues_time }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Connection timeout</strong></td>
+                        <td>{{ service.connection_timeout }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Base USERAGENT</strong></td>
+                        <td>{{ service.base_useragent }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Base REFERER</strong></td>
+                        <td>{{ service.base_referer }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Performance issues min probes count</strong></td>
+                        <td>{{ service.performance_issues_min_probes_count }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Service not working min probes count</strong></td>
+                        <td>{{ service.service_not_working_min_probes_count }}</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Time delta</strong></td>
+                        <td>{{ service.time_delta }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Is core service?</strong></td>
+                        <td>{{ service.is_core_service|yesno }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hosting?</strong></td>
+                        <td>{{ service.hosting|yesno }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            {% if service.comments %}
+                <h3>Comments</h3>
+                <pre>{{ service.comments }}</pre>
+            {% endif %}
+
+            <h3>Monitored phrases</h3>
+            {% if phrases %}
+            <table class="table table-bordered">
+                <thead>
+                   <tr>
+                       <th>Phrase</th>
+                       <th>Shall not be</th>
+                   </tr>
+
+                </thead>
+                <tbody>
+                    {% for p in phrases %}
+                        <tr>
+                            <td>{{ p.phrase }}</td>
+                            <td>{{ p.shall_not_be|yesno }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+                <p>List is empty...</p>
+            {% endif %}
+
+            <h3>Additional request params</h3>
+            {% if params %}
+                {% for param in params %}
+                    <h4>{{ param.name }}</h4>
+
+                    <table class="table table-bordered">
+
+                        <thead>
+                           <tr>
+                               <th>Param</th>
+                               <th>Value</th>
+                           </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td><strong>USERAGENT</strong></td>
+                                <td>{{ param.useragent }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>REFERER</strong></td>
+                                <td>{{ param.referer }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>GET</strong></td>
+                                <td>{{ param.get }}</td>
+                            </tr>
+
+                            <tr>
+                                <td><strong>POST</strong></td>
+                                <td>{{ param.post }}</td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                {% endfor %}
+            {% else %}
+                <p>List is empty...</p>
+            {% endif %}
+        </div>
+
+        <div class="span8">
+            <h3>Last hour response time</h3>
+            <ul class="nav nav-tabs" id="base_times_tabs">
+                {% for group in probes %}
+                    <li class="{% if forloop.first %}active{% endif %}"><a plot="main_plot_{{ group.group_id }}" href="#main_{{ group.group_id }}">{{ group.group_name }}</a></li>
+                {% endfor %}
+            </ul>
+            <div class="tab-content">
+                {% for group in probes %}
+                    <div class="tab-pane{% if forloop.first %} active{% endif %}" id="main_{{ group.group_id }}">
+                        <div id="main_plot_{{ group.group_id }}" style="width: 850px; height: 450px;"></div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <h3>Other last hour times</h3>
+            <ul class="nav nav-tabs" id="last_hour_times_tabs">
+                {% for group in probes %}
+                    <li class="{% if forloop.first %}active{% endif %}"><a plot="other_plot_{{ group.group_id }}" href="#other_{{ group.group_id }}">{{ group.group_name }}</a></li>
+                {% endfor %}
+            </ul>
+            <div class="tab-content">
+                {% for group in probes %}
+                    <div class="tab-pane{% if forloop.first %} active{% endif %}" id="other_{{ group.group_id }}">
+                        <div id="other_plot_{{ group.group_id }}" style="width: 850px; height: 450px;"></div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% include "boards/history_table.html" %}
+
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function() {
+            var main_charts = {};
+            {% for group in probes %}
+                var probes_{{ group.group_id }} = [{% for p in group.group_items %}['{{ p.created|time:"H:i" }}', {{ p.response_time }}]{% if not forloop.last %},{% endif %}{% endfor %}];
+                main_charts['main_plot_{{ group.group_id }}'] = Show.PlotLastHourResponseTime('main_plot_{{ group.group_id }}', probes_{{ group.group_id }});
+            {% endfor %}
+
+            var other_charts = {}
+            {% for group in probes %}
+                var namelookup_probes_{{ group.group_id }} = [{% for p in group.group_items %}['{{ p.created|time:"H:i" }}', {% if not p.namelookup_time %}0{% else %}{{ p.namelookup_time }}{% endif %}]{% if not forloop.last %},{% endif %}{% endfor %}];
+                var connect_time_probes_{{ group.group_id }} = [{% for p in group.group_items %}['{{ p.created|time:"H:i" }}', {% if not p.connect_time %}0{% else %}{{ p.connect_time }}{% endif %}]{% if not forloop.last %},{% endif %}{% endfor %}];
+                var starttransfer_time_probes_{{ group.group_id }} = [{% for p in group.group_items %}['{{ p.created|time:"H:i" }}', {% if not p.starttransfer_time %}0{% else %}{{ p.starttransfer_time }}{% endif %}]{% if not forloop.last %},{% endif %}{% endfor %}];
+                other_charts['other_plot_{{ group.group_id }}'] = Show.PlotOtherLastHourTimes('other_plot_{{ group.group_id }}', namelookup_probes_{{ group.group_id }}, connect_time_probes_{{ group.group_id }}, starttransfer_time_probes_{{ group.group_id }});
+            {% endfor %}
+
+            Show.BaseTimesPlotsTabs(main_charts);
+            Show.OtherTimesPlotsTabs(other_charts);
+
+            Base.reloadDashboard();
+        });
+    </script>
+
+{% endblock content %}

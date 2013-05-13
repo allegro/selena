@@ -1,0 +1,101 @@
+<script type="text/javascript">
+(function($) {
+	$(document).ready(function() {
+		$("#info_response_code").click(function () {
+      		$("#popup_response_code_list").slideToggle();
+    	});
+
+   		$("li").click(function () {
+        	$("#id_response_code").val($(this).attr('title'));
+    	    $("#popup_response_code_list").hide();
+	    });
+	});
+})(django.jQuery);
+</script>
+
+<span id="info_response_code" style="cursor: pointer">click here to select response code</span>
+<div id="popup_response_code_list" style="display:none; ">
+	<ul id="response_code_list" style="list-style-type:none !important; 
+	    cursor:pointer;
+	    width:360px; 
+	    height:400px;
+		padding-left: 25px !important;
+		text-align:left;
+		padding:15px;
+		border:1px solid #CCC;
+		background-color:#eee;
+	    overflow-y:scroll;
+	    overflow-y:none;
+	    margin-left: 106px;">
+	
+		<li title="100">100 Continue	</li>
+		<li title="101">101 Switching Protocols	</li>
+		<li title="102">102 Processing (WebDAV; RFC 2518)	</li>
+		<li title="200">200 OK	</li>
+		<li title="201">201 Created	</li>
+		<li title="202">202 Accepted	</li>
+		<li title="203">203 Non-Authoritative Information (since HTTP/1.1)	</li>
+		<li title="204">204 No Content	</li>
+		<li title="205">205 Reset Content	</li>
+		<li title="206">206 Partial Content	</li>
+		<li title="207">207 Multi-Status (WebDAV; RFC 4918)	</li>
+		<li title="208">208 Already Reported (WebDAV; RFC 5842)	</li>
+		<li title="226">226 IM Used (RFC 3229)	</li>
+		<li title="300">300 Multiple Choices	</li>
+		<li title="301">301 Moved Permanently	</li>
+		<li title="302">302 Found	</li>
+		<li title="303">303 See Other (since HTTP/1.1)	</li>
+		<li title="304">304 Not Modified	</li>
+		<li title="305">305 Use Proxy (since HTTP/1.1)	</li>
+		<li title="306">306 Switch Proxy	</li>
+		<li title="307">307 Temporary Redirect (since HTTP/1.1)	</li>
+		<li title="308">308 Permanent Redirect (experimental Internet-Draft)	</li>
+		<li title="400">400 Bad Request	</li>
+		<li title="401">401 Unauthorized	</li>
+		<li title="402">402 Payment Required	</li>
+		<li title="403">403 Forbidden	</li>
+		<li title="404">404 Not Found	</li>
+		<li title="405">405 Method Not Allowed	</li>
+		<li title="406">406 Not Acceptable	</li>
+		<li title="407">407 Proxy Authentication Required	</li>
+		<li title="408">408 Request Timeout	</li>
+		<li title="409">409 Conflict	</li>
+		<li title="410">410 Gone	</li>
+		<li title="411">411 Length Required	</li>
+		<li title="412">412 Precondition Failed	</li>
+		<li title="413">413 Request Entity Too Large	</li>
+		<li title="414">414 Request-URI Too Long	</li>
+		<li title="415">415 Unsupported Media Type	</li>
+		<li title="416">416 Requested Range Not Satisfiable	</li>
+		<li title="417">417 Expectation Failed	</li>
+		<li title="418">418 I'm a teapot (RFC 2324)	</li>
+		<li title="420">420 Enhance Your Calm (Twitter)	</li>
+		<li title="422">422 Unprocessable Entity (WebDAV; RFC 4918)	</li>
+		<li title="423">423 Locked (WebDAV; RFC 4918)	</li>
+		<li title="424">424 Failed Dependency (WebDAV; RFC 4918)	</li>
+		<li title="425">425 Unordered Collection (Internet draft)	</li>
+		<li title="426">426 Upgrade Required (RFC 2817)	</li>
+		<li title="428">428 Precondition Required (RFC 6585)	</li>
+		<li title="429">429 Too Many Requests (RFC 6585)	</li>
+		<li title="431">431 Request Header Fields Too Large (RFC 6585)	</li>
+		<li title="444">444 No Response (Nginx)	</li>
+		<li title="449">449 Retry With (Microsoft)	</li>
+		<li title="450">450 Blocked by Windows Parental Controls (Microsoft)	</li>
+		<li title="451">451 Unavailable For Legal Reasons (Internet draft)	</li>
+		<li title="499">499 Client Closed Request (Nginx)	</li>
+		<li title="500">500 Internal Server Error	</li>
+		<li title="501">501 Not Implemented	</li>
+		<li title="502">502 Bad Gateway	</li>
+		<li title="503">503 Service Unavailable	</li>
+		<li title="504">504 Gateway Timeout	</li>
+		<li title="505">505 HTTP Version Not Supported	</li>
+		<li title="506">506 Variant Also Negotiates (RFC 2295)	</li>
+		<li title="507">507 Insufficient Storage (WebDAV; RFC 4918)	</li>
+		<li title="508">508 Loop Detected (WebDAV; RFC 5842)	</li>
+		<li title="509">509 Bandwidth Limit Exceeded (Apache bw/limited extension)	</li>
+		<li title="510">510 Not Extended (RFC 2774)	</li>
+		<li title="511">511 Network Authentication Required	</li>
+		<li title="598">598 Network read timeout error (Unknown)	</li>
+		<li title="599">599 Network connect timeout error (Unknown)	</li>
+	</ul>
+</div>

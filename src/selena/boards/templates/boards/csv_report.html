@@ -1,0 +1,71 @@
+{% extends "boards/base.html" %}
+{% load staticfiles %}
+{% load get_by_id %}
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="{% static "js/bootstrap-datepicker.js" %}"></script>
+{% endblock javascript %}
+
+{% block css %}
+    <link href="{% static "css/datepicker.css" %}" rel="stylesheet">
+{% endblock css %}
+
+{% block content %}
+    <h1>Errors report</h1>
+
+    <div class="row-fluid">
+        <div class="span12 well">
+            <form class="form-inline" method="post" action="/generate-errors-report">
+                {% csrf_token %}
+                <div class="control-group{% if form.start_date.errors %} error{% endif %}" style="float: left; margin-right: 10px;">
+                    <div class="input-append">
+                        <label>{{ form.start_date.label }}</label>
+                        <div class="date" id="start_date" data-date="{{ form.start_date.value }}" data-date-format="yyyy-mm-dd">
+                            <input type="text" name="{{ form.start_date.name }}" value="{{ form.start_date.value }}">
+                            <span class="add-on"><i class="icon-th"></i></span>
+                            {% for e in form.start_date.errors %}
+                                <div class="help-block">{{ e }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group{% if form.stop_date.errors %} error{% endif %}" style="float: left; margin-right: 10px;">
+                    <div class="input-append">
+                        <label>{{ form.stop_date.label }}</label>
+                        <div class="date" id="stop_date" data-date="{{ form.stop_date.value }}" data-date-format="yyyy-mm-dd">
+                            <input type="text" name="{{ form.stop_date.name }}" value="{{ form.stop_date.value }}">
+                            <span class="add-on"><i class="icon-th"></i></span>
+                            {% for e in form.stop_date.errors %}
+                                <div class="help-block">{{ e }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group{% if form.service.errors %} error{% endif %}" style="float: left; margin-right: 10px;">
+                    <div class="input-append">
+                        <label>{{ form.service.label }}</label>
+                        <div>
+                            {{ form.service }}
+                            {% for e in form.service.errors %}
+                                <div class="help-block">{{ e }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <button style="margin-top: 23px;" type="submit" class="btn btn-primary"><i class="icon-download-alt icon-white"></i> Download report</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function() {
+            $('#start_date').datepicker({format: 'yyyy-mm-dd'});
+            $('#stop_date').datepicker({format: 'yyyy-mm-dd'});
+        });
+    </script>
+{% endblock content %}

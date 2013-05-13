@@ -1,0 +1,74 @@
+{% load get_by_id %}
+
+<div class="row-fluid">
+    <div class="span12">
+        <h3>History</h3>
+        <div style="float: right;"><small>Page {{ history.number }} of {{ history.paginator.num_pages }}.</small></div>
+        {% include "boards/pagination.html" with items=history %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>State</th>
+                    <th>Code</th>
+                    <th>Response</th>
+                    <th>NAMELOOKUP</th>
+                    <th>CONNECT</th>
+                    <th>PRETRANSFER</th>
+                    <th>STARTTRANSFER</th>
+                    <th>REDIRECT TIME</th>
+                    <th>SIZE DOWNLOAD</th>
+                    <th>SPEED DOWNLOAD</th>
+                    <th>REDIRECT COUNT</th>
+                    <th>CONNECTS COUNT</th>
+                    <th>ARP</th>
+                    <th>AGENT</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in history %}
+                <tr class="probe_{{ item.id }}">
+                    <td>{{ item.created|date:"Y-m-d H:i" }}</td>
+                    <td class="{% if item.response_state > 1%}with-error-msg{% endif %}">
+                        <span class="label {% if item.response_state == 2 %}label-warning{% elif item.response_state == 3 %}label-important{% elif item.response_state == 4 %}label-success{% elif item.response_state == 5 %}label-inverse{% endif %}">
+                            {% if item.response_state == 1 %}OK{% elif item.response_state == 2 %}Performance{% elif item.response_state == 3 %}Serice is working incorrectly{% elif item.response_state == 4 %}Wordchecks errors{% else %}Agent fail{% endif %}
+                        </span>
+                    </td>
+                    <td>{{ item.response_code }}</td>
+                    <td>{{ item.response_time|floatformat:2 }}</td>
+                    <td>{{ item.namelookup_time|floatformat:2 }}</td>
+                    <td>{{ item.connect_time|floatformat:2 }}</td>
+                    <td>{{ item.pretransfer_time|floatformat:2 }}</td>
+                    <td>{{ item.starttransfer_time|floatformat:2 }}</td>
+                    <td>{{ item.redirect_time|floatformat:2 }}</td>
+                    <td>{% if item.size_download %}{{ item.size_download }} B{% endif %}</td>
+                    <td>{% if item.speed_download %}{{ item.speed_download }} B/s{% endif %}</td>
+                    <td>{% if item.redirect_count != None %}{{ item.redirect_count }}{% endif %}</td>
+                    <td>{{ item.num_connects|default:"" }}</td>
+                    <td>{{ params|get_by_id:item.request_params_id }}</td>
+                    <td>{{ agents|get_by_id:item.agent_id }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% include "boards/pagination.html" with items=history %}
+    </div>
+</div>
+
+<script language="javascript" type="text/javascript">
+    $(document).ready(function() {
+        $('td.with-error-msg span.label').click(function () {
+            var span = $(this);
+            var probe_id = $(this).parent('td').parent('tr').attr('class').split('_')[1];
+            $.get(
+                '/get-error-msg/' + probe_id,
+                function(response) {
+                    if (response.trim().length) {
+                        jAlert(response.trim(), 'Info');
+                    }
+                }
+            );
+            return false;
+        });
+    });
+</script>

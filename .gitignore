@@ -1,0 +1,5 @@
+*.pyc
+*~
+*.swp
+.settings
+settings-local.py

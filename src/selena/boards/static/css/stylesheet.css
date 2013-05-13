@@ -1,0 +1,84 @@
+body {
+	padding-top: 60px;
+}
+
+.service-info {
+    padding: 5px;
+	margin-bottom: 20px;
+}
+.service-info h5 a:first-of-type:hover {
+    text-decoration: none;
+}
+.service-info p {
+    font-size: 9px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+.service_ico {
+    margin-right: 5px;
+}
+span.service-hist-wrap {
+    display: block;
+    height: 20px;
+    width: 190px;
+    padding: 0px;
+    margin-bottom: 10px;
+}
+span.service-hist-wrap span.hist-part {
+    display: block;
+    height: 20px;
+    width: 3px;
+    float: left;
+    margin: 0px;
+    background-color: #e5e5ff;
+    border-top: 4px solid #fff;
+    border-bottom: 4px solid #fff;
+}
+.mark span.service-hist-wrap span.hist-part {
+    border-top: 4px solid #ffdacc;
+    border-bottom: 4px solid #ffdacc;
+}
+span.service-hist-wrap span.hist-err:hover {
+    border-top: 4px solid #0088CC;
+    border-bottom: 4px solid #0088CC;
+}
+span.service-hist-wrap span.popover-open {
+    border-top: 4px solid #008c00 !important;
+    border-bottom: 4px solid #008c00 !important;
+}
+h1 {
+    margin-bottom: 25px;
+}
+h3 {
+    margin-bottom: 15px;
+}
+h4 {
+    margin-bottom: 10px;
+}
+h5 {
+    margin: 0px;
+}
+
+.mark {
+    background: #ffdacc;
+}
+
+#show-header h1 {
+    float: left;
+}
+
+#show-header #show-user-menu {
+    float: right;
+    margin-top: 6px;
+}
+
+.clear {
+    clear:both;
+}
+.input-append input {
+    width: 150px !important;
+}
+
+.with-error-msg span.label {
+    cursor: pointer;
+}

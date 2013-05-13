@@ -1,0 +1,249 @@
+======
+Selena
+======
+
+Installation
+------------
+
+Requirements
+~~~~~~~~~~~~
+Selena requires Python 2.7 which is included in the latest Ubuntu Server 12.04 LTS systems::
+
+  $ sudo apt-get install python-dev python-virtualenv
+
+Message queue
+~~~~~~~~~~~~~
+
+Selena communicate  with a cenral queue with `Redis <http://redis.io/>`_ as the broker. Install redis::
+
+  $ sudo apt-get install redis-server
+
+Since lost tasks can always be sent again, the durability guarantees which Redis
+provides by default are not necessary. You can significantly speed up the queue
+by commenting out the ``save`` lines from ``/etc/redis/redis.conf``.
+
+We can check the status of the Redis server::
+
+  $ redis-cli -h localhost -p 6379 -n 0 info
+
+Virtual Environment
+~~~~~~~~~~~~~~~~~~~
+
+Let's create a virtual environment for Python in the user's home::
+
+  $ virtualenv . --distribute --no-site-packages
+
+System User
+~~~~~~~~~~~
+
+Unprivileged and not owned by a person::
+
+  $ sudo adduser --home /home/selena selena
+  $ sudo su - selena
+
+In any shell the user can *activate* the virtual environment. By doing that, the
+default Python executable and helper scripts will point to those within the
+virtual env directory structure::
+
+  $ which python
+  /usr/local/bin/python
+  $ . bin/activate
+  (selena)$ which python
+  /home/selena/bin/python
+
+Database
+~~~~~~~~
+
+Selena use and support MySQL. To install MySQL invoke::
+
+  $ sudo apt-get install mysql-server libmysqlclient-dev libmysqld-dev
+
+You have to create now data base and user for Selena system. In Internet you can find many tutorials which show you how do it.
+
+
+Cache
+~~~~~
+
+Selena required some cache system like *memcached*. Install::
+
+  $ sudo apt-get install memcached
+
+Installing from pip
+~~~~~~~~~~~~~~~~~~~
+
+Simply invoke::
+
+  (selena)$ pip install selena
+
+Installing from sources
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Alternatively, to live on the bleeding edge, you can clone the selena git
+repository to ``project`` and install it manually::
+
+  (selena)$ git clone git://github.com/allegro/selena.git project
+  (selena)$ cd project
+  (selena)$ pip install -e .
+
+
+Selena Agent
+~~~~~~~~~~~~
+
+Selena needs to function properly installed and configured `Selena-agent <http://github.com/allegro/selena-agent>`_ package.
+
+
+Configuration
+-------------
+
+Create file /INSTALL_DIR/selena/setting-local.py and fill in the appropriate data.
+
+Fill MySQL connection data::
+
+  DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'your database name',
+        'USER': 'your database username',
+        'PASSWORD': 'your database password',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': 'SET storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci'
+        }
+    }
+  }
+
+Put quite a unique string of characters::
+
+  SECRET_KEY = 'very_unique_string'
+  AES_SECRET_KEY = b'sixteen byte key'
+
+Put numbers which represents the number of minutes that will be displayed by the service errors, example 30::
+
+  ERROR_TIME_INTERVAL =  30
+
+Define RQ queues. Queues `default` is required. You have to also define one queue for main selena agent, example `agent_1`::
+
+  RQ_QUEUES = {
+      'default': {
+          'HOST': 'your redis host',
+          'PORT': 'your redis port',
+          'DB': None,
+          'PASSWORD': None,
+      },
+      'agent_1': {
+          'HOST': 'your redis host',
+          'PORT': 'your redis port',
+          'DB': None,
+          'PASSWORD': None,
+     },
+  }
+
+You can also define queues: `planner`, `archiving`, `dispacher`, `monitors`, `stats`.
+Przeznaczenie poszczególnych kolejek jest następujące:
+
+    *planner* - tasks enable or disable planned technical breaks
+
+    *archiving* - creating partitions, archiving data
+
+    *dispacher* - to run monitoring tasks for services
+
+    *monitors* - collecting results from agents
+
+    *stats* - calculation of statistics
+
+
+You have to also configure cache. Sample cache configuration (for default `memcached` configs)::
+
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': '127.0.0.1:11211',
+        }
+    }
+
+
+Data base preparation
+~~~~~~~~~~~~~~~~~~~~~
+
+After creating the settings-local.py file, let's synchronize the database from
+sources by running the standard ``syncdb`` management command::
+
+  $(selena): ./manage.py syncdb
+
+then run migrations command::
+
+  $(selena): ./manage.py migrate
+
+
+Create partitions in the database by using the command::
+
+  $(selena): ./manage.py createpartitions
+
+
+Run web interface
+~~~~~~~~~~~~~~~~~
+
+To run selena web interface put command::
+
+  (selena)$ ./manage.py runserver 8080
+
+
+Configuration agents
+~~~~~~~~~~~~~~~~~~~~
+
+When your selena web interface is running you must add a main agents to your selena instance. Open this link in your browser `http://localhost:8080/admin/services/agent/add/ <http://localhost:8080/admin/services/agent/add/>`_ and log in into administration panel.
+You'll see the form, where you have to fill the name of your main agent, add a queue (remember the name of the queue must be set in your Selena agent `settings-local.py` file), and check the main agent checkbox. After added agent you will see `Salt` column in your agent row. Copy this sttring end add type it in Selena-agent `settings-local.py` file in `SALT` variable. It is very important for without it there will be communication with the Selena-agent.
+
+Add monitored servises
+~~~~~~~~~~~~~~~~~~~~~~
+In administration panel you will add a services which will be monitored by Selena.
+Open this link in browser `http://localhost:8080/admin/services/service/add/ <http://localhost:8080/admin/services/service/add/>`_ and add service url to be monitored.
+
+
+Commands
+~~~~~~~~
+
+Running a single monitoring services::
+
+  (selena)$: ./manage.py monitorall
+
+Search indicents::
+
+  (selena)$: ./manage.py searchincidents
+
+Activate/Deactivate technical breaks::
+
+  (selena)$: ./manage.py technicalbreaks
+
+For optimalizations availble commands to archivizations services monitoring results.
+If you create partitions in MySQL database run command::
+
+ (selena)$: ./manage.py createpartitions
+
+For archivizations you will run the command that merge and moves to the archive monitoring data older than 8 days::
+
+  (selena)$: ./manage.py makearchive
+
+If you will run commands assynchronical you can add `--async-mode=1` options to command.
+
+Automation
+~~~~~~~~~~
+
+You can configure crontabs in order to monitoring automatically in background, to edit crontab run commad::
+
+    $(selena): crontab -e
+
+and add this content::
+
+  */1 * * * * /YOUR_VIRTUAL_ENV_PATH/bin/python /INSTALATION_PATH/manage.py monitorall
+  */1 * * * * /YOUR_VIRTUAL_ENV_PATH/bin/python /INSTALATION_PATH/manage.py searchincidents --async-mode=1
+  */5 * * * * /YOUR_VIRTUAL_ENV_PATH/bin/python /INSTALATION_PATH/manage.py technicalbreaks --async-mode=1
+  0 1 * * * /YOUR_VIRTUAL_ENV_PATH/bin/python /INSTALATION_PATH/manage.py createpartitions --async-mode=1
+  30 1 * * * /YOUR_VIRTUAL_ENV_PATH/bin/python /INSTALATION_PATH/manage.py makearchive --async-mode=1
+
+Of course you can set your own time to execute this commands in CRON.
+
+
+To see the results of the monitoring sites in browser, open the following address:
+`http://localhost:8080 <http://localhost:8080>`_
