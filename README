@@ -14,11 +14,11 @@ Selena requires Python 2.7 which is included in the latest Ubuntu Server 12.04 L
 Message queue
 ~~~~~~~~~~~~~
 
-Selena communicate  with a cenral queue with `Redis <http://redis.io/>`_ as the broker. Install redis::
+Selena communicates with a central queue with `Redis <http://redis.io/>`_ as the broker. Install redis::
 
   $ sudo apt-get install redis-server
 
-Since lost tasks can always be sent again, the durability guarantees which Redis
+Since lost tasks can always be resent, the durability guarantees that Redis
 provides by default are not necessary. You can significantly speed up the queue
 by commenting out the ``save`` lines from ``/etc/redis/redis.conf``.
 
@@ -41,9 +41,9 @@ Unprivileged and not owned by a person::
   $ sudo adduser --home /home/selena selena
   $ sudo su - selena
 
-In any shell the user can *activate* the virtual environment. By doing that, the
-default Python executable and helper scripts will point to those within the
-virtual env directory structure::
+In any shell the user can *activate* the virtual environment. As a result of
+that, the default Python executable and helper scripts will point to those
+within the virtualenv directory structure::
 
   $ which python
   /usr/local/bin/python
@@ -54,17 +54,17 @@ virtual env directory structure::
 Database
 ~~~~~~~~
 
-Selena use and support MySQL. To install MySQL invoke::
+Selena uses and supports MySQL. To install MySQL invoke::
 
   $ sudo apt-get install mysql-server libmysqlclient-dev libmysqld-dev
 
-You have to create now data base and user for Selena system. In Internet you can find many tutorials which show you how do it.
+You now have to create a database and a user for Selena system. You can find many tutorials for that on the Internet.
 
 
 Cache
 ~~~~~
 
-Selena required some cache system like *memcached*. Install::
+Selena requires some cache system like *memcached*. Install::
 
   $ sudo apt-get install memcached
 
@@ -89,7 +89,7 @@ repository to ``project`` and install it manually::
 Selena Agent
 ~~~~~~~~~~~~
 
-Selena needs to function properly installed and configured `Selena-agent <http://github.com/allegro/selena-agent>`_ package.
+To function properly, Selena needs `Selena-agent <http://github.com/allegro/selena-agent>`_ package installed and configured.
 
 
 Configuration
@@ -113,16 +113,16 @@ Fill MySQL connection data::
     }
   }
 
-Put quite a unique string of characters::
+Generate new secret keys::
 
   SECRET_KEY = 'very_unique_string'
   AES_SECRET_KEY = b'sixteen byte key'
 
-Put numbers which represents the number of minutes that will be displayed by the service errors, example 30::
+Set the number of minutes that will be displayed by the service errors, example 30::
 
   ERROR_TIME_INTERVAL =  30
 
-Define RQ queues. Queues `default` is required. You have to also define one queue for main selena agent, example `agent_1`::
+Define RQ queues. The `default` queue is required. You have to also define one queue for main selena agent, for example `agent_1`::
 
   RQ_QUEUES = {
       'default': {
@@ -139,21 +139,20 @@ Define RQ queues. Queues `default` is required. You have to also define one queu
      },
   }
 
-You can also define queues: `planner`, `archiving`, `dispacher`, `monitors`, `stats`.
-Przeznaczenie poszczególnych kolejek jest następujące:
+You can define additional queues: `planner`, `archiving`, `dispacher`, `monitors`, `stats`. They are used as follows:
 
-    *planner* - tasks enable or disable planned technical breaks
+    *planner* - enable or disable planned technical breaks
 
-    *archiving* - creating partitions, archiving data
+    *archiving* - create partitions, archive data
 
-    *dispacher* - to run monitoring tasks for services
+    *dispacher* - run monitoring tasks for services
 
-    *monitors* - collecting results from agents
+    *monitors* - collect results from agents
 
-    *stats* - calculation of statistics
+    *stats* - calculate statistics
 
 
-You have to also configure cache. Sample cache configuration (for default `memcached` configs)::
+You also have to configure cache. Sample cache configuration (for default `memcached` configs)::
 
     CACHES = {
         'default': {
@@ -163,10 +162,10 @@ You have to also configure cache. Sample cache configuration (for default `memca
     }
 
 
-Data base preparation
-~~~~~~~~~~~~~~~~~~~~~
+Database preparation
+~~~~~~~~~~~~~~~~~~~~
 
-After creating the settings-local.py file, let's synchronize the database from
+After creating the ``settings-local.py`` file, synchronize the database with
 sources by running the standard ``syncdb`` management command::
 
   $(selena): ./manage.py syncdb
@@ -184,7 +183,7 @@ Create partitions in the database by using the command::
 Run web interface
 ~~~~~~~~~~~~~~~~~
 
-To run selena web interface put command::
+To run selena web interface use the command::
 
   (selena)$ ./manage.py runserver 8080
 
@@ -193,22 +192,23 @@ Configuration agents
 ~~~~~~~~~~~~~~~~~~~~
 
 When your selena web interface is running you must add a main agents to your selena instance. Open this link in your browser `http://localhost:8080/admin/services/agent/add/ <http://localhost:8080/admin/services/agent/add/>`_ and log in into administration panel.
-You'll see the form, where you have to fill the name of your main agent, add a queue (remember the name of the queue must be set in your Selena agent `settings-local.py` file), and check the main agent checkbox. After added agent you will see `Salt` column in your agent row. Copy this sttring end add type it in Selena-agent `settings-local.py` file in `SALT` variable. It is very important for without it there will be communication with the Selena-agent.
 
-Add monitored servises
+You will see a form where you have to fill the name of your main agent, add a queue (remember the name of the queue must be set in your Selena agent `settings-local.py` file), and check the main agent checkbox. After the agent is added you will see `Salt` column in your agent row. Copy this string and add to the Selena-agent `settings-local.py` file in `SALT` variable. It is very important, because without it there will be no communication with the Selena-agent.
+
+Add monitored services
 ~~~~~~~~~~~~~~~~~~~~~~
-In administration panel you will add a services which will be monitored by Selena.
-Open this link in browser `http://localhost:8080/admin/services/service/add/ <http://localhost:8080/admin/services/service/add/>`_ and add service url to be monitored.
+In administration panel add a service which will be monitored by Selena.
+Open this link in browser `http://localhost:8080/admin/services/service/add/ <http://localhost:8080/admin/services/service/add/>`_ and add a service URL to be monitored.
 
 
 Commands
 ~~~~~~~~
 
-Running a single monitoring services::
+Run a single monitoring service::
 
   (selena)$: ./manage.py monitorall
 
-Search indicents::
+Search incidents::
 
   (selena)$: ./manage.py searchincidents
 
@@ -216,21 +216,21 @@ Activate/Deactivate technical breaks::
 
   (selena)$: ./manage.py technicalbreaks
 
-For optimalizations availble commands to archivizations services monitoring results.
+For optimization, there are commands to archive service monitoring results.
 If you create partitions in MySQL database run command::
 
  (selena)$: ./manage.py createpartitions
 
-For archivizations you will run the command that merge and moves to the archive monitoring data older than 8 days::
+You will need to run the command that merges monitoring data older than 8 days and moves it to the archive::
 
   (selena)$: ./manage.py makearchive
 
-If you will run commands assynchronical you can add `--async-mode=1` options to command.
+If you want to run the commands asynchronically, you can add an ``--async-mode=1`` option to them.
 
 Automation
 ~~~~~~~~~~
 
-You can configure crontabs in order to monitoring automatically in background, to edit crontab run commad::
+You can configure Cron to monitor automatically in background. To edit crontab run command::
 
     $(selena): crontab -e
 
@@ -242,8 +242,8 @@ and add this content::
   0 1 * * * /YOUR_VIRTUAL_ENV_PATH/bin/python /INSTALATION_PATH/manage.py createpartitions --async-mode=1
   30 1 * * * /YOUR_VIRTUAL_ENV_PATH/bin/python /INSTALATION_PATH/manage.py makearchive --async-mode=1
 
-Of course you can set your own time to execute this commands in CRON.
+Of course you can set your own time to execute these commands in Cron.
 
 
-To see the results of the monitoring sites in browser, open the following address:
+To see the results of the monitoring in a browser, open the following address:
 `http://localhost:8080 <http://localhost:8080>`_
