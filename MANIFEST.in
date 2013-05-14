@@ -1,4 +1,4 @@
-include README CHANGES.rst LICENSE NOTICE
+include README.rst CHANGES LICENSE NOTICE
 recursive-include src/selena/boards/static *
 recursive-include src/selena/boards/templates *
 recursive-include src/selena/static *
