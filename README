@@ -42,7 +42,7 @@ Unprivileged and not owned by a person::
   $ sudo su - selena
 
 In any shell the user can *activate* the virtual environment. As a result of
-that that, the default Python executable and helper scripts will point to those
+that, the default Python executable and helper scripts will point to those
 within the virtualenv directory structure::
 
   $ which python
