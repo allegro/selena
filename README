@@ -14,7 +14,7 @@ Selena requires Python 2.7 which is included in the latest Ubuntu Server 12.04 L
 Message queue
 ~~~~~~~~~~~~~
 
-Selena communicate  with a central queue with `Redis <http://redis.io/>`_ as the broker. Install redis::
+Selena communicates with a central queue with `Redis <http://redis.io/>`_ as the broker. Install redis::
 
   $ sudo apt-get install redis-server
 
