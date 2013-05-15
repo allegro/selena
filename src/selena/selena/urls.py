@@ -45,7 +45,7 @@ urlpatterns = patterns(
         login_required(CoreServicesErrorsOnly.as_view()),
     ),
     url(
-        r'^mode/not-core-services$',
+        r'^mode/non-core-services$',
         login_required(NotCoreServices.as_view()),
     ),
     url(
