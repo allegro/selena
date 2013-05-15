@@ -24,8 +24,8 @@ class BaseMixin(object):
                     'href': '/mode/core-services-errors-only',
                 },
                 {
-                    'name': 'Not core services',
-                    'href': '/mode/not-core-services',
+                    'name': 'Non-core services',
+                    'href': '/mode/non-core-services',
                 },
             ],
             'additionalmenu_items': [
