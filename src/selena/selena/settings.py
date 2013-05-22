@@ -6,6 +6,8 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
+import os
+
 from lck.django import current_dir_support
 
 execfile(current_dir_support)
@@ -32,7 +34,7 @@ MEDIA_URL = ''
 STATIC_ROOT = ''
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    PROJECT_DIR + 'static',
+    os.path.join(PROJECT_DIR, 'selena', 'static'),
 )
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -57,7 +59,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'selena.urls'
 WSGI_APPLICATION = 'selena.wsgi.application'
 TEMPLATE_DIRS = (
-    PROJECT_DIR + 'templates'
+    os.path.join(PROJECT_DIR, 'selena', 'templates'),
 )
 INSTALLED_APPS = (
     'django.contrib.auth',

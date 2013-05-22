@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 assert sys.version_info >= (2, 7), "Python 2.7+ required."
 
 current_dir = os.path.abspath(os.path.dirname(__file__))
-sys.path.insert(0, current_dir + os.sep + 'src')
+sys.path.insert(0, os.path.join(current_dir, 'src', 'selena'))
 
 from selena.version import VERSION
 release = ".".join(str(num) for num in VERSION)
@@ -38,7 +38,7 @@ setup(
     zip_safe=False,
     entry_points={
         'console_scripts': [
-            'selena = manage:main',
+            'selena = selena.__main__:main',
         ],
     },
 )
