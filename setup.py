@@ -9,16 +9,16 @@ assert sys.version_info >= (2, 7), "Python 2.7+ required."
 current_dir = os.path.abspath(os.path.dirname(__file__))
 sys.path.insert(0, current_dir + os.sep + 'src')
 
-from selena import VERSION
+from selena.version import VERSION
 release = ".".join(str(num) for num in VERSION)
 
 
 setup(
     name='selena',
     version=release,
-    packages=find_packages('src'),
+    packages=find_packages('src/selena'),
     include_package_data=True,
-    package_dir={'': 'src'},
+    package_dir={'': 'src/selena'},
     description="Simple CURL based monitoring system.",
     author='Grupa Allegro Sp. z o.o. and Contributors',
     url='http://github.com/allegro/selena',
@@ -36,4 +36,9 @@ setup(
         "selena-agent==1.0.0",
     ],
     zip_safe=False,
+    entry_points={
+        'console_scripts': [
+            'selena = manage:main',
+        ],
+    },
 )

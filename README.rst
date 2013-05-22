@@ -68,6 +68,7 @@ Selena requires some cache system like *memcached*. Install::
 
   $ sudo apt-get install memcached
 
+
 Installing from pip
 ~~~~~~~~~~~~~~~~~~~
 
@@ -168,16 +169,16 @@ Database preparation
 After creating the ``settings-local.py`` file, synchronize the database with
 sources by running the standard ``syncdb`` management command::
 
-  $(selena): ./manage.py syncdb
+  $(selena): selena syncdb
 
 then run migrations command::
 
-  $(selena): ./manage.py migrate
+  $(selena): selena migrate
 
 
 Create partitions in the database by using the command::
 
-  $(selena): ./manage.py createpartitions
+  $(selena): selena createpartitions
 
 
 Run web interface
@@ -185,7 +186,7 @@ Run web interface
 
 To run selena web interface use the command::
 
-  (selena)$ ./manage.py runserver 8080
+  (selena)$ selena runserver 8080
 
 
 Configuration agents
@@ -206,24 +207,24 @@ Commands
 
 Run a single monitoring service::
 
-  (selena)$: ./manage.py monitorall
+  (selena)$: selena monitorall
 
 Search incidents::
 
-  (selena)$: ./manage.py searchincidents
+  (selena)$: selena searchincidents
 
 Activate/Deactivate technical breaks::
 
-  (selena)$: ./manage.py technicalbreaks
+  (selena)$: selena technicalbreaks
 
 For optimization, there are commands to archive service monitoring results.
 If you create partitions in MySQL database run command::
 
- (selena)$: ./manage.py createpartitions
+ (selena)$: selena createpartitions
 
 You will need to run the command that merges monitoring data older than 8 days and moves it to the archive::
 
-  (selena)$: ./manage.py makearchive
+  (selena)$: selena makearchive
 
 If you want to run the commands asynchronically, you can add an ``--async-mode=1`` option to them.
 
@@ -236,11 +237,11 @@ You can configure Cron to monitor automatically in background. To edit crontab r
 
 and add this content::
 
-  */1 * * * * /YOUR_VIRTUAL_ENV_PATH/bin/python /INSTALATION_PATH/manage.py monitorall
-  */1 * * * * /YOUR_VIRTUAL_ENV_PATH/bin/python /INSTALATION_PATH/manage.py searchincidents --async-mode=1
-  */5 * * * * /YOUR_VIRTUAL_ENV_PATH/bin/python /INSTALATION_PATH/manage.py technicalbreaks --async-mode=1
-  0 1 * * * /YOUR_VIRTUAL_ENV_PATH/bin/python /INSTALATION_PATH/manage.py createpartitions --async-mode=1
-  30 1 * * * /YOUR_VIRTUAL_ENV_PATH/bin/python /INSTALATION_PATH/manage.py makearchive --async-mode=1
+  */1 * * * * /YOUR_VIRTUAL_ENV_PATH/bin/selena monitorall
+  */1 * * * * /YOUR_VIRTUAL_ENV_PATH/bin/selena searchincidents --async-mode=1
+  */5 * * * * /YOUR_VIRTUAL_ENV_PATH/bin/selena technicalbreaks --async-mode=1
+  0 1 * * * /YOUR_VIRTUAL_ENV_PATH/bin/selena createpartitions --async-mode=1
+  30 1 * * * /YOUR_VIRTUAL_ENV_PATH/bin/selena makearchive --async-mode=1
 
 Of course you can set your own time to execute these commands in Cron.
 
