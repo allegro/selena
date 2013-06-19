@@ -96,7 +96,8 @@ To function properly, Selena needs `Selena-agent <http://github.com/allegro/sele
 Configuration
 -------------
 
-Create file /INSTALL_DIR/selena/setting-local.py and fill in the appropriate data.
+Create file /INSTALL_DIR/selena/settings-local.py and fill in the appropriate
+data.
 
 Fill MySQL connection data::
 
