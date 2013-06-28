@@ -128,14 +128,14 @@ Define RQ queues. The `default` queue is required. You have to also define one q
 
   RQ_QUEUES = {
       'default': {
-          'HOST': 'your redis host',
-          'PORT': 'your redis port',
+          'HOST': '127.0.0.1',  # Redis host
+          'PORT': 6379,  # Redis port
           'DB': None,
           'PASSWORD': None,
       },
       'agent_1': {
-          'HOST': 'your redis host',
-          'PORT': 'your redis port',
+          'HOST': '127.0.0.1',
+          'PORT': 6379,
           'DB': None,
           'PASSWORD': None,
      },
