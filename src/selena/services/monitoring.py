@@ -9,17 +9,17 @@ from __future__ import unicode_literals
 import json
 import re
 import time
+
 from uuid import uuid4
+
+import django_rq
 
 from django.conf import settings
 from django.core.cache import cache
-from redis import Redis
 from rq.exceptions import NoSuchJobError
 from rq.job import Job
 from selena_agent.monitor import run_test
 from selena_agent.utils import create_token
-import django_rq
-
 from services.models import (
     Agent,
     ResponseStateChoices,
@@ -36,11 +36,8 @@ class MainAgentDoesNotExist(Exception):
 
 
 def _get_redis_connection(queue_name):
-    return Redis(
-        host=settings.RQ_QUEUES[queue_name].get('HOST'),
-        port=settings.RQ_QUEUES[queue_name].get('PORT'),
-        db=settings.RQ_QUEUES[queue_name].get('DB'),
-        password=settings.RQ_QUEUES[queue_name].get('PASSWORD'),
+    return django_rq.queues.get_redis_connection(
+        settings.RQ_QUEUES[queue_name],
     )
 
 
