@@ -31,9 +31,9 @@ setup(
         "South==0.7.6",
         "pycurl==7.18.1",
         "django-tastypie==0.9.14",
-        "rq==0.3.7",
-        "django-rq==0.4.6",
-        "selena-agent==1.0.0",
+        "rq==0.3.8",
+        "django-rq==0.5.1",
+        "selena-agent==1.0.1",
     ],
     zip_safe=False,
     entry_points={

@@ -7,4 +7,4 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 
-VERSION = (1, 0, 0)
+VERSION = (1, 0, 1)
