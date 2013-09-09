@@ -45,11 +45,10 @@ def _search_incidents():
         is_active=True,
         is_technical_break=False,
     ).values_list('id', flat=True)
-    #active_services_ids = [item.pk for item in active_services]
     start_date = now - datetime.timedelta(minutes=2)
     services_with_problems = ServiceHistory.objects.filter(
         service_id__in=active_services_ids,
-        response_state__in=((2, 3)),
+        response_state__in=(2, 3),
         created__gt=start_date,
         created__lt=now,
     ).values(
