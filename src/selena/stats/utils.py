@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 from services.models import ResponseStateChoices as RSC
 from sys import stdout
 
+
 def get_real_problems_number(items, ok_mode=False,
                              get_first_and_last_broken_probes=False):
     groups = {}
@@ -49,7 +50,8 @@ def get_real_problems_number(items, ok_mode=False,
                 nr_of_failure_probes += 1
             elif probe.response_state == RSC.performance.id:
                 nr_of_performance_probes += 1
-        if (all_probes_with_err and all_probes_with_agent_failed == False) or (ok_mode and all_probes_with_agent_failed):
+        if ((all_probes_with_err and all_probes_with_agent_failed is False) or
+                (ok_mode and all_probes_with_agent_failed)):
             i += 1
             all_probes_failed_groups.append(key)
 
@@ -59,7 +61,8 @@ def get_real_problems_number(items, ok_mode=False,
         problem_type = 'performance'
 
     if not get_first_and_last_broken_probes:
-        return {'real_problems_number': i,
+        return {
+            'real_problems_number': i,
             'problem_type': problem_type,
         }
     first_broken_probe = None

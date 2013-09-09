@@ -16,7 +16,7 @@ execfile(namespace_package_support)
 from datetime import timedelta
 
 
-DEBUG = True
+DEBUG = False
 PROJECT_DIR = CURRENT_DIR + '/../'
 TEMPLATE_DEBUG = DEBUG
 ALLOWED_HOSTS = []

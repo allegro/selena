@@ -17,43 +17,39 @@ from services.models import Service, ServiceHistory
 from stats.models import Incident
 from stats.utils import get_real_problems_number
 
-from sys import stdout
+
 def _search_incidents():
     now = timezone.now()
     # checking if any incidents can be closed
     ok_services_ids = []
-    for open_incident in Incident.objects.filter(is_closed = False):
-        service_working_min_probes_count = Service.objects.get(pk = open_incident.service_id).service_working_min_probes_count
-        start_date = now - datetime.timedelta(minutes=service_working_min_probes_count)
+    for open_incident in Incident.objects.filter(is_closed=False):
+        working_min_probes_count = Service.objects.get(
+            pk=open_incident.service_id
+        ).service_working_min_probes_count
+        start_date = now - datetime.timedelta(minutes=working_min_probes_count)
         ret = get_real_problems_number(
             ServiceHistory.objects.filter(
-                service_id = open_incident.service_id,
-                created__gt = start_date,
-                created__lt = now
-                ).order_by('created'),
-            ok_mode = True,
-            )
-        stdout.write("after get_real_problems_number:\n")
-        stdout.write("%i\n" %ret['real_problems_number'])
-        if ret['real_problems_number'] == service_working_min_probes_count:
+                service_id=open_incident.service_id,
+                created__gt=start_date,
+                created__lte=now,
+            ).order_by('created'),
+            ok_mode=True,
+        )
+        if ret['real_problems_number'] == working_min_probes_count:
             open_incident.is_closed = True
             open_incident.end_date = start_date
-            stdout.write('Closing open incident')
         else:
             open_incident.end_date = now
-            stdout.write("NOT Closing open incident, update end_date\n")
-            stdout.write("%s" %open_incident.end_date)
         open_incident.save()
-
-    active_services = Service.objects.filter(
+    active_services_ids = Service.objects.filter(
         is_active=True,
         is_technical_break=False,
-    )
-    active_services_ids = [item.pk for item in active_services]
+    ).values_list('id', flat=True)
+    #active_services_ids = [item.pk for item in active_services]
     start_date = now - datetime.timedelta(minutes=2)
     services_with_problems = ServiceHistory.objects.filter(
         service_id__in=active_services_ids,
-        response_state__in=(2,3),
+        response_state__in=((2, 3)),
         created__gt=start_date,
         created__lt=now,
     ).values(
