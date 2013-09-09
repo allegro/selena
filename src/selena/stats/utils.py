@@ -7,7 +7,6 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 from services.models import ResponseStateChoices as RSC
-from sys import stdout
 
 
 def get_real_problems_number(items, ok_mode=False,
