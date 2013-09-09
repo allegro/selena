@@ -20,81 +20,46 @@ from stats.utils import get_real_problems_number
 
 def _search_incidents():
     now = timezone.now()
-    start_date = now - datetime.timedelta(minutes=5)
-    technical_breaks = Service.objects.filter(
-        is_active=True,
-        is_technical_break=True,
-    )
-    technical_breaks_ids = [item.pk for item in technical_breaks]
-    parsed_services = []
-    not_working_services = ServiceHistory.objects.exclude(
-        service_id__in=technical_breaks_ids,
-    ).filter(
-        response_state=3,
-        created__gt=start_date,
-        created__lt=now,
-    ).values(
-        'service_id',
-    ).annotate(
-        problems_number=Count('response_state'),
-    ).order_by('-created')
-    for item in not_working_services:
-        service = None
-        try:
-            service = Service.objects.get(
-                pk=item['service_id'],
-                is_active=True,
-            )
-        except Service.DoesNotExist:
-            continue
-        to_date = timezone.now()
-        since_date = to_date - datetime.timedelta(
-            minutes=service.time_delta,
-        )
+    # checking if any incidents can be closed
+    ok_services_ids = []
+    for open_incident in Incident.objects.filter(is_closed=False):
+        working_min_probes_count = Service.objects.get(
+            pk=open_incident.service_id
+        ).service_working_min_probes_count
+        start_date = now - datetime.timedelta(minutes=working_min_probes_count)
         ret = get_real_problems_number(
             ServiceHistory.objects.filter(
-                service_id=service.pk,
-                created__gt=since_date,
-                created__lt=to_date
-            ).order_by('-created'),
-            die_services_mode=True,
-            get_first_and_last_broken_probes=True,
+                service_id=open_incident.service_id,
+                created__gt=start_date,
+                created__lte=now,
+            ).order_by('created'),
+            ok_mode=True,
         )
-        if ret['real_problems_number'] >= service.service_not_working_min_probes_count:
-            try:
-                incident = Incident.objects.get(
-                    service=service,
-                    is_closed=False,
-                )
-                incident.end_date = ret['last_broken_probe'].created
-            except Incident.DoesNotExist:
-                incident = Incident(
-                    service=service,
-                    start_date=ret['first_broken_probe'].created,
-                    end_date=ret['last_broken_probe'].created,
-                    is_closed=False,
-                )
-            incident.save()
-            parsed_services.append(service.pk)
-    services_with_problems = ServiceHistory.objects.exclude(
-        service_id__in=technical_breaks_ids,
-    ).filter(
-        response_state=2,
+        if ret['real_problems_number'] == working_min_probes_count:
+            open_incident.is_closed = True
+            open_incident.end_date = start_date
+        else:
+            open_incident.end_date = now
+        open_incident.save()
+    active_services_ids = Service.objects.filter(
+        is_active=True,
+        is_technical_break=False,
+    ).values_list('id', flat=True)
+    start_date = now - datetime.timedelta(minutes=2)
+    services_with_problems = ServiceHistory.objects.filter(
+        service_id__in=active_services_ids,
+        response_state__in=(2, 3),
         created__gt=start_date,
         created__lt=now,
     ).values(
         'service_id',
-    ).annotate(
-        problems_number=Count('response_state'),
     ).order_by('-created')
+
     for item in services_with_problems:
-        if int(item['service_id']) in parsed_services:
-            continue
         service = None
         try:
             service = Service.objects.get(
                 pk=item['service_id'],
-                is_active=True,
             )
         except Service.DoesNotExist:
             continue
@@ -106,16 +71,15 @@ def _search_incidents():
                 created__gt=since_date,
                 created__lt=to_date,
             ).order_by('-created'),
-            die_services_mode=False,
+            ok_mode=False,
             get_first_and_last_broken_probes=True,
         )
-        if ret['real_problems_number'] >= service.performance_issues_min_probes_count:
+        if ret['real_problems_number'] == service.time_delta:
             try:
                 incident = Incident.objects.get(
                     service=service,
                     is_closed=False,
                 )
-                incident.end_date = ret['last_broken_probe'].created
             except Incident.DoesNotExist:
                 incident = Incident(
                     service=service,
@@ -123,13 +87,8 @@ def _search_incidents():
                     end_date=ret['last_broken_probe'].created,
                     is_closed=False,
                 )
+            incident.incident_type = ret['problem_type']
             incident.save()
-            parsed_services.append(service.pk)
-    open_incidents = Incident.objects.filter(is_closed=False)
-    for open_incident in open_incidents:
-        if open_incident.service.pk not in parsed_services:
-            open_incident.is_closed = True
-            open_incident.save()
 
 
 def search_incidents():
