@@ -15,4 +15,5 @@ class Incident(models.Model):
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
+    incident_type = models.CharField(max_length=15, default='failure')
     is_closed = models.BooleanField(default=False, db_index=True)

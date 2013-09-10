@@ -30,13 +30,14 @@ class IncidentResource(ModelResource):
     class Meta:
         queryset = Incident.objects.all().order_by('start_date')
         resource_name = 'incidents'
-        fields = ['id', 'start_date', 'end_date', 'is_closed']
+        fields = ['id', 'start_date', 'end_date', 'is_closed', 'incident_type']
         allowed_methods = ['get']
         filtering = {
             'id': ['exact'],
             'start_date': ['exact', 'lte', 'gte'],
             'end_date': ['exact', 'lte', 'gte'],
             'service_name': ['exact'],
+            'incident_type': ['exact'],
         }
         authentication = ApiKeyAuthentication()
         authorization = ReadOnlyAuthorization()

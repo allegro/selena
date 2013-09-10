@@ -58,10 +58,8 @@ class Service(models.Model):
     connection_timeout = models.PositiveSmallIntegerField(
         editable=True,
         default=settings.DEFAULT_PARAMS_CONNECTION_TIMEOUT)
-    performance_issues_min_probes_count = models.PositiveSmallIntegerField(
-        default=settings.DEFAULT_PERFORMANCE_ISSUES_PROBES)
-    service_not_working_min_probes_count = models.PositiveSmallIntegerField(
-        default=settings.DEFAULT_SERVICE_NOT_WORKING_PROBES)
+    service_working_min_probes_count = models.PositiveSmallIntegerField(
+        default=settings.DEFAULT_SERVICE_WORKING_PROBES)
     time_delta = models.PositiveSmallIntegerField(
         default=settings.DEFAULT_TIME_DELTA)
     base_useragent = models.CharField(
