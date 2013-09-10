@@ -1,6 +1,15 @@
 Change Log
 ----------
 
+1.0.2
+~~~~~
+
+Released on Sept 10, 2013
+
+* new incident detection algorithm
+* django version 1.5.2
+
+
 1.0.1
 ~~~~~
 
