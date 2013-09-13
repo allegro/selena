@@ -11,6 +11,7 @@ import datetime
 from django.conf import settings
 from django.db.models import Count
 from django.utils import timezone
+from uuid import uuid4
 import django_rq
 
 from services.models import Service, ServiceHistory
@@ -30,7 +31,7 @@ def _search_incidents():
         ret = get_real_problems_number(
             ServiceHistory.objects.filter(
                 service_id=open_incident.service_id,
-                created__gt=start_date,
+                created__gte=start_date,
                 created__lte=now,
             ).order_by('created'),
             ok_mode=True,
@@ -80,14 +81,18 @@ def _search_incidents():
                     service=service,
                     is_closed=False,
                 )
+                if incident.incident_type != ret['problem_type']:
+                    incident.incident_type = ret['problem_type']
+
             except Incident.DoesNotExist:
                 incident = Incident(
                     service=service,
                     start_date=ret['first_broken_probe'].created,
                     end_date=ret['last_broken_probe'].created,
+                    incident_type=ret['problem_type'],
                     is_closed=False,
+                    uuid=str(uuid4()),
                 )
-            incident.incident_type = ret['problem_type']
             incident.save()
 
 
