@@ -122,5 +122,8 @@ AES_SECRET_KEY = b'Sixteen byte key'
 ERROR_TIME_INTERVAL = 30
 RQ_QUEUES = None
 
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+
 from lck.django import profile_support
 execfile(profile_support)
