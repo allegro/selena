@@ -77,4 +77,6 @@ urlpatterns = patterns(
     url(r'^api/', include(v01_api.urls)),
     url(r'^django-rq/', include('django_rq.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^login/', 'django.contrib.auth.views.login',
+        {'template_name': 'admin/login.html'}),
 )
