@@ -1,6 +1,9 @@
 {% load staticfiles %}
+{% load i18n %}
+
+{% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}">
     <head>
         <meta charset="utf-8">
         <title>Selena</title>
@@ -33,7 +36,7 @@
                             {% endfor %}
                             {% if boards|length > 0 %}
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manually defined <b class="caret"></b></a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans "Manually defined" %} <b class="caret"></b></a>
                                     <ul class="dropdown-menu">
                                         {% for board in boards %}
                                             <li><a href="/manually-defined/{{ board.id }}">{{ board.name }}</a></li>

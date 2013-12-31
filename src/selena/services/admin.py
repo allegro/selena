@@ -86,8 +86,8 @@ class AdditionalRequestParamInLine(admin.StackedInline):
 
 
 class ServiceAdminForm(forms.ModelForm):
-    user = forms.CharField(required=False)
-    password = forms.CharField(required=False)
+    user = forms.CharField(_('user'), required=False)
+    password = forms.CharField(_('password'), required=False)
     response_code = forms.CharField(
         max_length=3, initial=200, help_text=Helper().custom_status_helper(),
     )
@@ -109,19 +109,19 @@ class ServiceAdminForm(forms.ModelForm):
     def clean_performance_issues_time(self):
         performance_issues_time = self.cleaned_data['performance_issues_time']
         if performance_issues_time > 30:
-            raise forms.ValidationError("Max acceptable value is 30.")
+            raise forms.ValidationError(_("Max acceptable value is 30."))
         return performance_issues_time
 
     def clean_connection_timeout(self):
         connection_timeout = self.cleaned_data['connection_timeout']
         if connection_timeout > 30:
-            raise forms.ValidationError("Max acceptable value is 30.")
+            raise forms.ValidationError(_("Max acceptable value is 30."))
         return connection_timeout
 
     def clean_sensitivity(self):
         sensitivity = self.cleaned_data['sensitivity']
         if sensitivity > 1:
-            raise forms.ValidationError("Max acceptable value is 1.")
+            raise forms.ValidationError(_("Max acceptable value is 1."))
         return sensitivity
 
     def save(self, commit=True):
@@ -145,7 +145,7 @@ class ServiceAdmin(admin.ModelAdmin):
             "%s successfully marked as active." % message_bit,
         )
 
-    activate_active_flag.short_description = "Activate"
+    activate_active_flag.short_description = _("Activate")
 
     def deactivate_active_flag(self, request, queryset):
         rows_updated = queryset.update(is_active=0)
@@ -158,7 +158,7 @@ class ServiceAdmin(admin.ModelAdmin):
             "%s successfully marked as unactive." % message_bit,
         )
 
-    deactivate_active_flag.short_description = "Deactivate"
+    deactivate_active_flag.short_description = _("Deactivate")
 
     def activate_core_services_flag(self, request, queryset):
         rows_updated = queryset.update(is_core_service=1)
@@ -171,7 +171,7 @@ class ServiceAdmin(admin.ModelAdmin):
             "%s successfully marked as core." % message_bit,
         )
 
-    activate_core_services_flag.short_description = "Mark as core"
+    activate_core_services_flag.short_description = _("Mark as core")
 
     def deactivate_core_services_flag(self, request, queryset):
         rows_updated = queryset.update(is_core_service=0)
@@ -184,7 +184,7 @@ class ServiceAdmin(admin.ModelAdmin):
             "%s successfully marked as not core." % message_bit,
         )
 
-    deactivate_core_services_flag.short_description = "Mark as not core"
+    deactivate_core_services_flag.short_description = _("Mark as not core")
 
     def activate_technical_break_flag(self, request, queryset):
         rows_updated = queryset.update(is_technical_break=1)
@@ -198,7 +198,7 @@ class ServiceAdmin(admin.ModelAdmin):
         )
 
     activate_technical_break_flag.short_description = \
-        "Switch to technical break state"
+        _("Switch to technical break state")
 
     def deactivate_technical_break_flag(self, request, queryset):
         rows_updated = queryset.update(is_technical_break=0)
@@ -212,7 +212,7 @@ class ServiceAdmin(admin.ModelAdmin):
         )
 
     deactivate_technical_break_flag.short_description = \
-        "Disable technical break state"
+        _("Disable technical break state")
 
     def activate_hosting_flag(self, request, queryset):
         rows_updated = queryset.update(hosting=1)
@@ -225,7 +225,7 @@ class ServiceAdmin(admin.ModelAdmin):
             "%s successfully marked as hosting." % message_bit,
         )
 
-    activate_hosting_flag.short_description = "Mark as hosting"
+    activate_hosting_flag.short_description = _("Mark as hosting")
 
     def deactivate_hosting_flag(self, request, queryset):
         rows_updated = queryset.update(hosting=0)
@@ -238,7 +238,7 @@ class ServiceAdmin(admin.ModelAdmin):
             "%s successfully market as not hosting." % message_bit,
         )
 
-    deactivate_hosting_flag.short_description = "Mark as not hosting"
+    deactivate_hosting_flag.short_description = _("Mark as not hosting")
 
     form = ServiceAdminForm
     fieldsets = [
@@ -291,7 +291,7 @@ class AgentAdminForm(forms.ModelForm):
         is_main = cleaned_data.get("is_main")
         is_active = cleaned_data.get("is_active")
         if is_main and not is_active:
-            msg = u"Inactive agent can not be set as the main."
+            msg = _("Inactive agent can not be set as the main.")
             self._errors["is_main"] = self.error_class([msg])
         return cleaned_data
 

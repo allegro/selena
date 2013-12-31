@@ -1,28 +1,29 @@
 {% load get_by_id %}
+{% load i18n %}
 
 <div class="row-fluid">
     <div class="span12">
         <h3>History</h3>
-        <div style="float: right;"><small>Page {{ history.number }} of {{ history.paginator.num_pages }}.</small></div>
+        <div style="float: right;"><small>{% blocktrans with page_number=history.number num_pages=history.paginator.num_pages %}Page {{ page_number }} of {{ num_pages }}.{% endblocktrans %}</small></div>
         {% include "boards/pagination.html" with items=history %}
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Date</th>
-                    <th>State</th>
-                    <th>Code</th>
-                    <th>Response</th>
-                    <th>NAMELOOKUP</th>
-                    <th>CONNECT</th>
-                    <th>PRETRANSFER</th>
-                    <th>STARTTRANSFER</th>
-                    <th>REDIRECT TIME</th>
-                    <th>SIZE DOWNLOAD</th>
-                    <th>SPEED DOWNLOAD</th>
-                    <th>REDIRECT COUNT</th>
-                    <th>CONNECTS COUNT</th>
-                    <th>ARP</th>
-                    <th>AGENT</th>
+                    <th>{% trans "Date" %}</th>
+                    <th>{% trans "State" %}</th>
+                    <th>{% trans "Code" %}</th>
+                    <th>{% trans "Response" %}</th>
+                    <th>{% trans "NAMELOOKUP" %}</th>
+                    <th>{% trans "CONNECT" %}</th>
+                    <th>{% trans "PRETRANSFER" %}</th>
+                    <th>{% trans "STARTTRANSFER" %}</th>
+                    <th>{% trans "REDIRECT TIME" %}</th>
+                    <th>{% trans "SIZE DOWNLOAD" %}</th>
+                    <th>{% trans "SPEED DOWNLOAD" %}</th>
+                    <th>{% trans "REDIRECT COUNT" %}</th>
+                    <th>{% trans "CONNECTS COUNT" %}</th>
+                    <th>{% trans "ARP" %}</th>
+                    <th>{% trans "AGENT" %}</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,7 +32,7 @@
                     <td>{{ item.created|date:"Y-m-d H:i" }}</td>
                     <td class="{% if item.response_state > 1%}with-error-msg{% endif %}">
                         <span class="label {% if item.response_state == 2 %}label-warning{% elif item.response_state == 3 %}label-important{% elif item.response_state == 4 %}label-success{% elif item.response_state == 5 %}label-inverse{% endif %}">
-                            {% if item.response_state == 1 %}OK{% elif item.response_state == 2 %}Performance{% elif item.response_state == 3 %}Serice is working incorrectly{% elif item.response_state == 4 %}Wordchecks errors{% else %}Agent fail{% endif %}
+                            {% if item.response_state == 1 %}{% trans "OK" %}{% elif item.response_state == 2 %}{% trans "Performance" %}{% elif item.response_state == 3 %}{% trans "Serice is working incorrectly" %}{% elif item.response_state == 4 %}{% trans "Wordchecks errors" %}{% else %}{% trans "Agent fail" %}{% endif %}
                         </span>
                     </td>
                     <td>{{ item.response_code }}</td>

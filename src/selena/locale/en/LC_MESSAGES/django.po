@@ -1,0 +1,650 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-12-31 12:22+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: boards/models.py:16 services/models.py:68 services/models.py:232
+msgid "name"
+msgstr ""
+
+#: boards/models.py:17
+msgid "services"
+msgstr ""
+
+#: boards/models.py:20
+msgid "Board"
+msgstr ""
+
+#: boards/models.py:21
+msgid "Boards"
+msgstr ""
+
+#: boards/templates/boards/base.html:39
+msgid "Manually defined"
+msgstr ""
+
+#: boards/templates/boards/full_history.html:16
+#, python-format
+msgid "Full history of: %(service_name)s"
+msgstr ""
+
+#: boards/templates/boards/full_history.html:19
+msgid "Service details"
+msgstr ""
+
+#: boards/templates/boards/full_history.html:20
+#: boards/templates/boards/service_details.html:27
+msgid "Edit service"
+msgstr ""
+
+#: boards/templates/boards/full_history.html:80
+msgid "Refresh"
+msgstr ""
+
+#: boards/templates/boards/history_table.html:7
+#, python-format
+msgid "Page %(page_number)s of %(num_pages)s."
+msgstr ""
+
+#: boards/templates/boards/history_table.html:12
+msgid "Date"
+msgstr ""
+
+#: boards/templates/boards/history_table.html:13
+msgid "State"
+msgstr ""
+
+#: boards/templates/boards/history_table.html:14
+msgid "Code"
+msgstr ""
+
+#: boards/templates/boards/history_table.html:15
+msgid "Response"
+msgstr ""
+
+#: boards/templates/boards/history_table.html:16
+msgid "NAMELOOKUP"
+msgstr ""
+
+#: boards/templates/boards/history_table.html:17
+msgid "CONNECT"
+msgstr ""
+
+#: boards/templates/boards/history_table.html:18
+msgid "PRETRANSFER"
+msgstr ""
+
+#: boards/templates/boards/history_table.html:19
+msgid "STARTTRANSFER"
+msgstr ""
+
+#: boards/templates/boards/history_table.html:20
+msgid "REDIRECT TIME"
+msgstr ""
+
+#: boards/templates/boards/history_table.html:21
+msgid "SIZE DOWNLOAD"
+msgstr ""
+
+#: boards/templates/boards/history_table.html:22
+msgid "SPEED DOWNLOAD"
+msgstr ""
+
+#: boards/templates/boards/history_table.html:23
+msgid "REDIRECT COUNT"
+msgstr ""
+
+#: boards/templates/boards/history_table.html:24
+msgid "CONNECTS COUNT"
+msgstr ""
+
+#: boards/templates/boards/history_table.html:25
+msgid "ARP"
+msgstr ""
+
+#: boards/templates/boards/history_table.html:26
+msgid "AGENT"
+msgstr ""
+
+#: boards/templates/boards/history_table.html:35 services/models.py:248
+msgid "OK"
+msgstr ""
+
+#: boards/templates/boards/history_table.html:35
+msgid "Performance"
+msgstr ""
+
+#: boards/templates/boards/history_table.html:35
+msgid "Serice is working incorrectly"
+msgstr ""
+
+#: boards/templates/boards/history_table.html:35
+msgid "Wordchecks errors"
+msgstr ""
+
+#: boards/templates/boards/history_table.html:35
+msgid "Agent fail"
+msgstr ""
+
+#: boards/templates/boards/index.html:22
+msgid "MIN"
+msgstr ""
+
+#: boards/templates/boards/index.html:22
+msgid "MAX"
+msgstr ""
+
+#: boards/templates/boards/index.html:22
+msgid "AVG"
+msgstr ""
+
+#: boards/templates/boards/probe_details.html:1
+msgid "Status"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:26
+msgid "Full history"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:35
+msgid "Base info"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:39
+#: boards/templates/boards/service_details.html:128
+msgid "Param"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:40
+#: boards/templates/boards/service_details.html:129
+msgid "Value"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:45
+msgid "Name"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:49
+msgid "Url"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:53
+msgid "Sensitivity"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:57
+msgid "Expected response code"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:61
+msgid "Perfomance issues time"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:65
+msgid "Connection timeout"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:69 services/models.py:92
+msgid "Base USERAGENT"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:73 services/models.py:97
+msgid "Base REFERER"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:77
+msgid "Time delta"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:81
+msgid "Is core service?"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:85
+msgid "Hosting?"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:92
+msgid "Comments"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:96
+msgid "Monitored phrases"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:101
+msgid "Phrase"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:102
+msgid "Shall not be"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:116
+#: boards/templates/boards/service_details.html:156
+msgid "List is empty..."
+msgstr ""
+
+#: boards/templates/boards/service_details.html:119
+msgid "Additional request params"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:135 services/models.py:234
+msgid "USERAGENT"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:139 services/models.py:235
+msgid "REFERER"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:143
+msgid "GET"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:148
+msgid "POST"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:161
+msgid "Last hour response time"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:175
+msgid "Other last hour times"
+msgstr ""
+
+#: boards/views/common.py:20
+msgid "All"
+msgstr ""
+
+#: boards/views/common.py:21
+msgid "Errors only"
+msgstr ""
+
+#: boards/views/common.py:22
+msgid "Core services"
+msgstr ""
+
+#: boards/views/common.py:24
+msgid "Core services errors only"
+msgstr ""
+
+#: boards/views/common.py:28
+msgid "Non-core services"
+msgstr ""
+
+#: boards/views/common.py:34
+msgid "Generate errors report"
+msgstr ""
+
+#: boards/views/common.py:37
+msgid "Admin panel"
+msgstr ""
+
+#: planner/models.py:16
+msgid "short description"
+msgstr ""
+
+#: planner/models.py:17
+msgid "date from"
+msgstr ""
+
+#: planner/models.py:18
+msgid "date to"
+msgstr ""
+
+#: planner/models.py:20
+msgid "activated"
+msgstr ""
+
+#: planner/models.py:30
+msgid "Technical break"
+msgstr ""
+
+#: planner/models.py:31
+msgid "Technical breaks"
+msgstr ""
+
+#: selena/templates/admin/base.html:28
+msgid "Go to Board"
+msgstr ""
+
+#: selena/templates/admin/base.html:29
+msgid "Welcome,"
+msgstr ""
+
+#: selena/templates/admin/base.html:34
+msgid "Documentation"
+msgstr ""
+
+#: selena/templates/admin/base.html:37
+msgid "Change password"
+msgstr ""
+
+#: selena/templates/admin/base.html:39
+msgid "Log out"
+msgstr ""
+
+#: selena/templates/admin/base.html:48
+msgid "Home"
+msgstr ""
+
+#: selena/templates/admin/base_site.html:4
+msgid "Selena admin"
+msgstr ""
+
+#: selena/templates/admin/base_site.html:7
+msgid "Selena"
+msgstr ""
+
+#: selena/templates/admin/index.html:19
+#, python-format
+msgid "Models available in the %(name)s application."
+msgstr ""
+
+#: selena/templates/admin/index.html:20
+#, python-format
+msgid "%(name)s"
+msgstr ""
+
+#: selena/templates/admin/index.html:30
+msgid "Add"
+msgstr ""
+
+#: selena/templates/admin/index.html:36
+msgid "Change"
+msgstr ""
+
+#: selena/templates/admin/index.html:47
+msgid "You don't have permission to edit anything."
+msgstr ""
+
+#: selena/templates/admin/index.html:55
+msgid "Recent Actions"
+msgstr ""
+
+#: selena/templates/admin/index.html:56
+msgid "My Actions"
+msgstr ""
+
+#: selena/templates/admin/index.html:60
+msgid "None available"
+msgstr ""
+
+#: selena/templates/admin/index.html:74
+msgid "Unknown content"
+msgstr ""
+
+#: selena/templates/admin/status_code.html:17
+msgid "click here to select response code"
+msgstr ""
+
+#: services/admin.py:52
+msgid ""
+"POST parameters must be given by pattern variable \"parameter=value\" or "
+"\"parameter1=value1&parameter2=value2\" for many"
+msgstr ""
+
+#: services/admin.py:65
+msgid ""
+"GET parameters must be given by pattern variable \"parameter=value\" or "
+"\"parameter1=value1&parameter2=value2\" for many"
+msgstr ""
+
+#: services/admin.py:73
+msgid "Enter: USERAGENT, REFERER, POST or GET"
+msgstr ""
+
+#: services/admin.py:89
+msgid "user"
+msgstr ""
+
+#: services/admin.py:90
+msgid "password"
+msgstr ""
+
+#: services/admin.py:112 services/admin.py:118
+msgid "Max acceptable value is 30."
+msgstr ""
+
+#: services/admin.py:124
+msgid "Max acceptable value is 1."
+msgstr ""
+
+#: services/admin.py:148
+msgid "Activate"
+msgstr ""
+
+#: services/admin.py:161
+msgid "Deactivate"
+msgstr ""
+
+#: services/admin.py:174
+msgid "Mark as core"
+msgstr ""
+
+#: services/admin.py:187
+msgid "Mark as not core"
+msgstr ""
+
+#: services/admin.py:201
+msgid "Switch to technical break state"
+msgstr ""
+
+#: services/admin.py:215
+msgid "Disable technical break state"
+msgstr ""
+
+#: services/admin.py:228
+msgid "Mark as hosting"
+msgstr ""
+
+#: services/admin.py:241
+msgid "Mark as not hosting"
+msgstr ""
+
+#: services/admin.py:248
+msgid "Params"
+msgstr ""
+
+#: services/admin.py:255
+msgid "Additional agents"
+msgstr ""
+
+#: services/admin.py:256
+msgid "Authentication"
+msgstr ""
+
+#: services/admin.py:294
+msgid "Inactive agent can not be set as the main."
+msgstr ""
+
+#: services/models.py:26
+msgid "Queue"
+msgstr ""
+
+#: services/models.py:27
+msgid "Queues"
+msgstr ""
+
+#: services/models.py:32
+msgid "is main"
+msgstr ""
+
+#: services/models.py:37 services/models.py:111 services/models.py:219
+msgid "is active"
+msgstr ""
+
+#: services/models.py:43
+msgid "queue"
+msgstr ""
+
+#: services/models.py:45
+msgid "salt"
+msgstr ""
+
+#: services/models.py:53
+msgid "Agent"
+msgstr ""
+
+#: services/models.py:54
+msgid "Agents"
+msgstr ""
+
+#: services/models.py:60
+msgid "no authentication"
+msgstr ""
+
+#: services/models.py:61
+msgid "basic"
+msgstr ""
+
+#: services/models.py:62
+msgid "digest"
+msgstr ""
+
+#: services/models.py:63
+msgid "GSS negotiate"
+msgstr ""
+
+#: services/models.py:64
+msgid "NTLM"
+msgstr ""
+
+#: services/models.py:69
+msgid "url"
+msgstr ""
+
+#: services/models.py:72
+msgid "response code"
+msgstr ""
+
+#: services/models.py:76
+msgid "performance issue time"
+msgstr ""
+
+#: services/models.py:80
+msgid "connection timeout"
+msgstr ""
+
+#: services/models.py:84
+msgid "service working min probes count"
+msgstr ""
+
+#: services/models.py:87
+msgid "time delta"
+msgstr ""
+
+#: services/models.py:99
+msgid "auth user"
+msgstr ""
+
+#: services/models.py:105
+msgid "auth pass"
+msgstr ""
+
+#: services/models.py:117
+msgid "created"
+msgstr ""
+
+#: services/models.py:122
+msgid "modified"
+msgstr ""
+
+#: services/models.py:127
+msgid "is technical break"
+msgstr ""
+
+#: services/models.py:133
+msgid "is core service"
+msgstr ""
+
+#: services/models.py:138
+msgid "hosting"
+msgstr ""
+
+#: services/models.py:139
+msgid "comments"
+msgstr ""
+
+#: services/models.py:140
+msgid "order"
+msgstr ""
+
+#: services/models.py:145
+msgid "Specify additional agents for this service."
+msgstr ""
+
+#: services/models.py:147
+msgid "additional agents"
+msgstr ""
+
+#: services/models.py:150
+msgid "sensivity"
+msgstr ""
+
+#: services/models.py:151
+msgid "Specify sensivity lever for this service. E.g. 0.25."
+msgstr ""
+
+#: services/models.py:157
+msgid "auth method"
+msgstr ""
+
+#: services/models.py:211
+msgid "Service"
+msgstr ""
+
+#: services/models.py:212
+msgid "Services"
+msgstr ""
+
+#: services/models.py:216
+msgid "phrase"
+msgstr ""
+
+#: services/models.py:217
+msgid "shall not be"
+msgstr ""
+
+#: services/models.py:227 services/models.py:241
+msgid "service"
+msgstr ""
+
+#: services/models.py:249
+msgid "Performance issues"
+msgstr ""
+
+#: services/models.py:250
+msgid "Service is working incorrectly"
+msgstr ""
+
+#: services/models.py:251
+msgid "Wordcheck error"
+msgstr ""
+
+#: services/models.py:252
+msgid "No response from agent"
+msgstr ""
+
+#: services/models.py:256
+msgid "service id"
+msgstr ""
+
+#: services/models.py:258
+msgid "response state"
+msgstr ""

@@ -1,5 +1,6 @@
 {% extends "boards/base.html" %}
 {% load staticfiles %}
+{% load i18n %}
 
 {% block javascript %}
     <script language="javascript" type="text/javascript" src="{% static "js/dashboard.js" %}"></script>
@@ -18,7 +19,7 @@
                 <a href="/show/{{ item.id }}" title="view details">{{ item.name }}</a>
             </h5>
             <p>
-                MIN: {{ item.min_response_time }}s MAX: {{ item.max_response_time }}s AVG: {{ item.avg_response_time }}s
+                {% trans "MIN" %}: {{ item.min_response_time }}s {% trans "MAX" %}: {{ item.max_response_time }}s {% trans "AVG" %}: {{ item.avg_response_time }}s
             </p>
             <span class="service-hist-wrap" sid="{{ item.id }}" data-have-problems="{{ item.have_problems}}"></span>
         </div>
