@@ -1,3 +1,4 @@
+{% load i18n %}
 <script type="text/javascript">
 (function($) {
 	$(document).ready(function() {
@@ -13,7 +14,7 @@
 })(django.jQuery);
 </script>
 
-<span id="info_response_code" style="cursor: pointer">click here to select response code</span>
+<span id="info_response_code" style="cursor: pointer">{% trans 'click here to select response code' %}</span>
 <div id="popup_response_code_list" style="display:none; ">
 	<ul id="response_code_list" style="list-style-type:none !important; 
 	    cursor:pointer;

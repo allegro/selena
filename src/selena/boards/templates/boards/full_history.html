@@ -1,6 +1,7 @@
 {% extends "boards/base.html" %}
 {% load staticfiles %}
 {% load get_by_id %}
+{% load i18n %}
 
 {% block javascript %}
     <script language="javascript" type="text/javascript" src="{% static "js/bootstrap-datepicker.js" %}"></script>
@@ -12,11 +13,11 @@
 
 {% block content %}
     <div id="show-header">
-        <h1>Full history of: {{ service.name }}</h1>
+        <h1>{% blocktrans with service_name=service.name %}Full history of: {{ service_name }}{% endblocktrans %}</h1>
 
         <div id="show-user-menu">
-            <a href="/show/{{ service.id }}" class="btn"><i class="icon-chevron-left"></i> Service details</a>
-            <a href="/admin/services/service/{{ service.id }}" class="btn"><i class="icon-pencil"></i> Edit service</a>
+            <a href="/show/{{ service.id }}" class="btn"><i class="icon-chevron-left"></i> {% trans "Service details" %}</a>
+            <a href="/admin/services/service/{{ service.id }}" class="btn"><i class="icon-pencil"></i> {% trans "Edit service" %}</a>
         </div>
 
         <div class="clear"></div>
@@ -76,7 +77,7 @@
                 </div>
 
                 <div class="control-group">
-                    <button style="margin-top: 23px;" type="submit" class="btn btn-primary"><i class="icon-refresh icon-white"></i> Refresh</button>
+                    <button style="margin-top: 23px;" type="submit" class="btn btn-primary"><i class="icon-refresh icon-white"></i> {% trans "Refresh" %}</button>
                 </div>
             </form>
         </div>

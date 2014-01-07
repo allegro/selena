@@ -1,5 +1,6 @@
 {% extends "boards/base.html" %}
 {% load staticfiles %}
+{% load i18n %}
 
 {% block javascript %}
     <script language="javascript" type="text/javascript" src="{% static "js/jquery.jqplot.min.js" %}"></script>
@@ -22,8 +23,8 @@
         <h1>{{ service.name }}</h1>
 
         <div id="show-user-menu">
-            <a href="/history/{{ service.id }}" class="btn btn-info"><i class=" icon-calendar icon-white"></i> Full history</a>
-            <a href="/admin/services/service/{{ service.id }}" class="btn"><i class="icon-pencil"></i> Edit service</a>
+            <a href="/history/{{ service.id }}" class="btn btn-info"><i class=" icon-calendar icon-white"></i> {% trans "Full history" %}</a>
+            <a href="/admin/services/service/{{ service.id }}" class="btn"><i class="icon-pencil"></i> {% trans "Edit service" %}</a>
         </div>
 
         <div class="clear"></div>
@@ -31,74 +32,74 @@
 
     <div class="row-fluid">
         <div class="span4">
-            <h3>Base info</h3>
+            <h3>{% trans "Base info" %}</h3>
             <table class="table table-bordered">
                 <thead>
                    <tr>
-                       <th>Param</th>
-                       <th>Value</th>
+                       <th>{% trans "Param" %}</th>
+                       <th>{% trans "Value" %}</th>
                    </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>Name</strong></td>
+                        <td><strong>{% trans "Name" %}</strong></td>
                         <td>{{ service.name }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Url</strong></td>
+                        <td><strong>{% trans "Url" %}</strong></td>
                         <td><a href="{{ service.url }}" target="_blank">{{ service.url }}</a></td>
                     </tr>
                     <tr>
-                        <td><strong>Sensitivity</strong></td>
+                        <td><strong>{% trans "Sensitivity" %}</strong></td>
                         <td>{{ service.sensitivity|floatformat:2 }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Expected response code</strong></td>
+                        <td><strong>{% trans "Expected response code" %}</strong></td>
                         <td>{{ service.response_code }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Perfomance issues time</strong></td>
+                        <td><strong>{% trans "Perfomance issues time" %}</strong></td>
                         <td>{{ service.performance_issues_time }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Connection timeout</strong></td>
+                        <td><strong>{% trans "Connection timeout" %}</strong></td>
                         <td>{{ service.connection_timeout }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Base USERAGENT</strong></td>
+                        <td><strong>{% trans "Base USERAGENT" %}</strong></td>
                         <td>{{ service.base_useragent }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Base REFERER</strong></td>
+                        <td><strong>{% trans "Base REFERER" %}</strong></td>
                         <td>{{ service.base_referer }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Time delta</strong></td>
+                        <td><strong>{% trans "Time delta" %}</strong></td>
                         <td>{{ service.time_delta }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Is core service?</strong></td>
+                        <td><strong>{% trans "Is core service?" %}</strong></td>
                         <td>{{ service.is_core_service|yesno }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Hosting?</strong></td>
+                        <td><strong>{% trans "Hosting?" %}</strong></td>
                         <td>{{ service.hosting|yesno }}</td>
                     </tr>
                 </tbody>
             </table>
 
             {% if service.comments %}
-                <h3>Comments</h3>
+                <h3>{% trans "Comments" %}</h3>
                 <pre>{{ service.comments }}</pre>
             {% endif %}
 
-            <h3>Monitored phrases</h3>
+            <h3>{% trans "Monitored phrases" %}</h3>
             {% if phrases %}
             <table class="table table-bordered">
                 <thead>
                    <tr>
-                       <th>Phrase</th>
-                       <th>Shall not be</th>
+                       <th>{% trans "Phrase" %}</th>
+                       <th>{% trans "Shall not be" %}</th>
                    </tr>
 
                 </thead>
@@ -112,10 +113,10 @@
                 </tbody>
             </table>
             {% else %}
-                <p>List is empty...</p>
+                <p>{% trans "List is empty..." %}</p>
             {% endif %}
 
-            <h3>Additional request params</h3>
+            <h3>{% trans "Additional request params" %}</h3>
             {% if params %}
                 {% for param in params %}
                     <h4>{{ param.name }}</h4>
@@ -124,27 +125,27 @@
 
                         <thead>
                            <tr>
-                               <th>Param</th>
-                               <th>Value</th>
+                               <th>{% trans "Param" %}</th>
+                               <th>{% trans "Value" %}</th>
                            </tr>
                         </thead>
 
                         <tbody>
                             <tr>
-                                <td><strong>USERAGENT</strong></td>
+                                <td><strong>{% trans "USERAGENT" %}</strong></td>
                                 <td>{{ param.useragent }}</td>
                             </tr>
                             <tr>
-                                <td><strong>REFERER</strong></td>
+                                <td><strong>{% trans "REFERER" %}</strong></td>
                                 <td>{{ param.referer }}</td>
                             </tr>
                             <tr>
-                                <td><strong>GET</strong></td>
+                                <td><strong>{% trans "GET" %}</strong></td>
                                 <td>{{ param.get }}</td>
                             </tr>
 
                             <tr>
-                                <td><strong>POST</strong></td>
+                                <td><strong>{% trans "POST" %}</strong></td>
                                 <td>{{ param.post }}</td>
                             </tr>
                         </tbody>
@@ -152,12 +153,12 @@
                     </table>
                 {% endfor %}
             {% else %}
-                <p>List is empty...</p>
+                <p>{% trans "List is empty..." %}</p>
             {% endif %}
         </div>
 
         <div class="span8">
-            <h3>Last hour response time</h3>
+            <h3>{% trans "Last hour response time" %}</h3>
             <ul class="nav nav-tabs" id="base_times_tabs">
                 {% for group in probes %}
                     <li class="{% if forloop.first %}active{% endif %}"><a plot="main_plot_{{ group.group_id }}" href="#main_{{ group.group_id }}">{{ group.group_name }}</a></li>
@@ -171,7 +172,7 @@
                 {% endfor %}
             </div>
 
-            <h3>Other last hour times</h3>
+            <h3>{% trans "Other last hour times" %}</h3>
             <ul class="nav nav-tabs" id="last_hour_times_tabs">
                 {% for group in probes %}
                     <li class="{% if forloop.first %}active{% endif %}"><a plot="other_plot_{{ group.group_id }}" href="#other_{{ group.group_id }}">{{ group.group_name }}</a></li>
