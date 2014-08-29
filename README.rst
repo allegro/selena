@@ -96,7 +96,7 @@ To function properly, Selena needs `Selena-agent <http://github.com/allegro/sele
 Configuration
 -------------
 
-Create file /INSTALL_DIR/selena/settings-local.py and fill in the appropriate
+Create file /INSTALL_DIR/src/selena/selena/settings-local.py and fill in the appropriate
 data.
 
 Fill MySQL connection data::
@@ -227,7 +227,13 @@ You will need to run the command that merges monitoring data older than 8 days a
 
   (selena)$: selena makearchive
 
+Calculate SLA for active services::
+
+  (selena)$: selena calculatesla
+
 If you want to run the commands asynchronically, you can add an ``--async-mode=1`` option to them.
+
+
 
 Automation
 ~~~~~~~~~~
@@ -243,6 +249,7 @@ and add this content::
   */5 * * * * /YOUR_VIRTUAL_ENV_PATH/bin/selena technicalbreaks --async-mode=1
   0 1 * * * /YOUR_VIRTUAL_ENV_PATH/bin/selena createpartitions --async-mode=1
   30 1 * * * /YOUR_VIRTUAL_ENV_PATH/bin/selena makearchive --async-mode=1
+  0 3 * * * /YOUR_VIRTUAL_ENV_PATH/bin/selena calculatesla
 
 Of course you can set your own time to execute these commands in Cron.
 
