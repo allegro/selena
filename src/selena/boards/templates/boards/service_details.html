@@ -85,6 +85,18 @@
                         <td><strong>{% trans "Hosting?" %}</strong></td>
                         <td>{{ service.hosting|yesno }}</td>
                     </tr>
+                    <tr>
+                        <td><strong>{% trans "SLA 7 days" %}</strong></td>
+                        <td>{{ sla.sla7days }}%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{% trans "SLA 1 month"%}</strong></td>
+                        <td>{{ sla.sla1month }}%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{% trans "SLA 3 months"%}</strong></td>
+                        <td>{{ sla.sla3months }}%</td>
+                    </tr>
                 </tbody>
             </table>
 

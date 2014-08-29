@@ -20,6 +20,7 @@ from boards.views.boards import (
     NotCoreServices,
     ProbeDetails,
     ServiceDetails,
+    SLA,
 )
 from boards.views.charts import BarChart
 from boards.views.reports import CSVErrorsReport, FullHistory
@@ -37,7 +38,7 @@ v01_api.register(ServiceResource())
 
 urlpatterns = patterns(
     '',
-    url(r'^$', login_required(Home.as_view())),
+    url(r'^$', login_required(SLA.as_view())),
     url(r'^mode/core-services$', login_required(CoreServices.as_view())),
     url(r'^mode/errors-only$', login_required(ErrorsOnly.as_view())),
     url(

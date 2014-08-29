@@ -28,6 +28,7 @@ from services.models import (
     Service,
     ServiceHistory,
     ServiceHistoryExtra,
+    SlaCache,
 )
 from .common import AjaxBase, Base
 
@@ -47,8 +48,21 @@ class Home(Base):
         })
         return ret
 
+class SLA(Home):
+    template_name = 'boards/sla.html'
 
-class CoreServices(Home):
+    def _get_reports(self):
+        return get_report_data()
+
+    def get_context_data(self, **kwargs):
+        ret = super(SLA, self).get_context_data(**kwargs)
+        ret.update({
+            'reports': kwargs
+        })
+        return ret
+
+
+class CoreServices(SLA):
     def _get_items(self):
         end_date = timezone.now()
         start_date = end_date - timedelta(hours=1)
@@ -82,7 +96,7 @@ class CoreServicesErrorsOnly(Home):
         )
 
 
-class NotCoreServices(Home):
+class NotCoreServices(SLA):
     def _get_items(self):
         end_date = timezone.now()
         start_date = end_date - timedelta(hours=1)
@@ -93,7 +107,7 @@ class NotCoreServices(Home):
         )
 
 
-class CustomBoards(Home):
+class CustomBoards(SLA):
     def _get_items(self):
         end_date = timezone.now()
         start_date = end_date - timedelta(hours=1)
@@ -202,6 +216,7 @@ class ServiceDetails(Base):
             'history': history,
             'agents': Agent.objects.all(),
             'probes': self._get_charts_data(),
+            'sla' : SlaCache.objects.get(service_id=self.service.id),
         })
         return ret
 

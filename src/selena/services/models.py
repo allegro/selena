@@ -335,3 +335,15 @@ class ServiceHistoryArchive(models.Model):
 
     class Meta:
         ordering = ['-created']
+
+class SlaDaily(models.Model):
+    service_id = models.PositiveIntegerField(db_index=True)
+    day = models.DateTimeField(auto_now_add=False, auto_now=False)
+    sla = models.FloatField(blank=True, null=True)
+
+class SlaCache(models.Model):
+    service_id = models.PositiveIntegerField(primary_key=True, db_index=True)
+    sla7days = models.FloatField(blank=True, null=True)
+    sla1month = models.FloatField(blank=True, null=True)
+    sla3months = models.FloatField(blank=True, null=True)
+

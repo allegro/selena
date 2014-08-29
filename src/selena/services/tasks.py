@@ -15,7 +15,6 @@ import django_rq
 from services.monitoring import test_service
 from services.models import Service
 
-
 def _create_history_partitions():
     now = datetime.datetime.now()
     required_partitions = [
@@ -284,3 +283,4 @@ def monitor_all():
             timeout=60,
             result_ttl=0,
         )
+

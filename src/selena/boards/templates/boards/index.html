@@ -21,6 +21,9 @@
             <p>
                 {% trans "MIN" %}: {{ item.min_response_time }}s {% trans "MAX" %}: {{ item.max_response_time }}s {% trans "AVG" %}: {{ item.avg_response_time }}s
             </p>
+            <p>
+                {% block sla %}{% endblock sla %}
+            </p>
             <span class="service-hist-wrap" sid="{{ item.id }}" data-have-problems="{{ item.have_problems}}"></span>
         </div>
         {% if forloop.counter|divisibleby:"6" or forloop.last %}
