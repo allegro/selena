@@ -51,17 +51,6 @@ class Home(Base):
 class SLA(Home):
     template_name = 'boards/sla.html'
 
-    def _get_reports(self):
-        return get_report_data()
-
-    def get_context_data(self, **kwargs):
-        ret = super(SLA, self).get_context_data(**kwargs)
-        ret.update({
-            'reports': kwargs
-        })
-        return ret
-
-
 class CoreServices(SLA):
     def _get_items(self):
         end_date = timezone.now()

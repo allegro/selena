@@ -7,10 +7,9 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 import datetime
+from pytz import timezone
 
-from django.conf import settings
 from django.db import connection, DatabaseError, transaction
-import django_rq
 
 OFFSET_PERIOD = 7
 WEEK = 7
@@ -36,8 +35,8 @@ def _calculate_SLA(offset, service):
     transaction.managed()
     transaction.commit()
     yesterday = datetime.date.today() - datetime.timedelta(days=offset)
-    # retrieve history. It omits situations where one agent has failure
-    # and there is at least another one agent which returns success.
+    # retrieve history. It take into account situation where one agent has a failure
+    # and there is, at least, another one agent which reports success.
     sql = """
         SELECT created, response_state
         FROM services_servicehistory
@@ -50,7 +49,9 @@ def _calculate_SLA(offset, service):
         yesterday.strftime("%Y-%m-%d 00:00:01"),
         yesterday.strftime("%Y-%m-%d 23:59:59"),
     ])
-    start_time = yesterday
+    here = timezone('UTC')
+    start_time_naive = datetime.datetime.combine(yesterday, datetime.time())
+    start_time = here.localize(start_time_naive)
     aggregated_failing_time_sec = 0
     break_found = False
     number_of_tries = 0
@@ -71,6 +72,13 @@ def _calculate_SLA(offset, service):
     # if there is at least one record in services_sevicehistory for selected service, calucate SLA
     # if the day has no records, lets assume, we are not able to calculate SLA
     if (number_of_tries > 0):
+        # include last period: difference between last entry in servicehistory and 00:00:00 next day
+        if break_found == True:
+            today = datetime.date.today() - datetime.timedelta(days=(offset-1))
+            stop_time_naive = datetime.datetime.combine(today, datetime.time())
+            stop_time = here.localize(stop_time_naive)
+            diff_time = stop_time - start_time
+            aggregated_failing_time_sec += diff_time.total_seconds()
         data = {
             'service_id': service,
             'day': yesterday,
@@ -84,7 +92,7 @@ def _calculate_SLA(offset, service):
             transaction.commit()
         except DatabaseError as e:
             transaction.rollback()
-            print("DB error %s", e)
+            # print("DB error %s", e)
             return
     cursor.close()
 
@@ -187,6 +195,6 @@ def _save_sla_to_cache(service, sla7d, sla1m, sla3m):
         transaction.commit()
     except DatabaseError as e:
         transaction.rollback()
-        print("DB error %s", e)
+        # print("DB error %s", e)
         return
     cursor.close()
