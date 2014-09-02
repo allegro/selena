@@ -2,8 +2,17 @@
 Selena
 ======
 
+Introduction
+============
+
+Selena is a tool for monitoring website performance by monitoring response
+times, response codes and site content (via keyword checks).
+
+It's distributed by design via agents which can be geographically separate
+allowing for monitoring the user experience from multiple ISP-s.
+
 Installation
-------------
+============
 
 Requirements
 ~~~~~~~~~~~~
@@ -94,7 +103,7 @@ To function properly, Selena needs `Selena-agent <http://github.com/allegro/sele
 
 
 Configuration
--------------
+~~~~~~~~~~~~~
 
 Create file /INSTALL_DIR/selena/settings-local.py and fill in the appropriate
 data.
@@ -249,3 +258,9 @@ Of course you can set your own time to execute these commands in Cron.
 
 To see the results of the monitoring in a browser, open the following address:
 `http://localhost:8080 <http://localhost:8080>`_
+
+License
+=======
+Selena is licensed under the `Apache License, v2.0 <https://github.com/allegro/selena/blob/master/LICENSE>`_.
+
+Copyright (c) 2013-2014 `Allegro Group <http://allegrogroup.com>`_.
