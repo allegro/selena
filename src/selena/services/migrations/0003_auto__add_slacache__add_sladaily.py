@@ -10,7 +10,7 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         # Adding model 'SlaCache'
         db.create_table(u'services_slacache', (
-            ('service_id', self.gf('django.db.models.fields.PositiveIntegerField')(primary_key=True, db_index=True)),
+            ('service_id', self.gf('django.db.models.fields.PositiveIntegerField')(primary_key=True)),
             ('sla7days', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
             ('sla1month', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
             ('sla3months', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
@@ -143,7 +143,7 @@ class Migration(SchemaMigration):
         },
         u'services.slacache': {
             'Meta': {'object_name': 'SlaCache'},
-            'service_id': ('django.db.models.fields.PositiveIntegerField', [], {'primary_key': 'True', 'db_index': 'True'}),
+            'service_id': ('django.db.models.fields.PositiveIntegerField', [], {'primary_key': 'True'}),
             'sla1month': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
             'sla3months': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
             'sla7days': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'})
