@@ -3,7 +3,7 @@
 
 {% block sla %}
     SLA:
-        {% trans "7d" %}: <strong>{{item.sla7days}}%</strong>,
-        {% trans "1m" %}: <strong>{{item.sla1month}}%</strong>,
-        {% trans "3m" %}: <strong>{{item.sla3months}}%</strong>
+        {% blocktrans with sla=item.sla7days %}7d: <strong>{{ sla }}%</strong> {% endblocktrans %}
+        {% blocktrans with sla=item.sla1month %}7d: <strong>{{ sla }}%</strong> {% endblocktrans %}
+        {% blocktrans with sla=item.sla3months %}7d: <strong>{{ sla }}%</strong> {% endblocktrans %}
 {% endblock sla %}
