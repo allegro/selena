@@ -24,7 +24,10 @@ logger = logging.getLogger(__name__)
 
 
 def calculatesla():
-    services = Service.objects.filter(is_active=True).only('id')
+    # SlaCache object for bulk create
+    sla_cache_create = []
+
+    services = Service.objects.filter(is_active=True).only('id').order_by('id')
     for service in services:
         last_day = _find_start_date(service)
         diff = datetime.date.today() - last_day
@@ -35,7 +38,16 @@ def calculatesla():
         sla7d = '%.2f' % _calculate_cache(service, timezone.now() - datetime.timedelta(days=WEEK))
         sla1m = '%.2f' % _calculate_cache(service, timezone.now() + relativedelta(months=-ONE_MONTH))
         sla3m = '%.2f' % _calculate_cache(service, timezone.now() + relativedelta(months=-THREE_MONTHS))
-        _save_sla_to_cache(service, sla7d, sla1m, sla3m)
+        # create SlaCache and append it to list
+        sla_cache_create.append(SlaCache(service_id=service.id,
+                                         sla7days=sla7d,
+                                         sla1month=sla1m,
+                                         sla3months=sla3m))
+
+    # delete all cache objects.
+    SlaCache.objects.filter(pk__in=[sc.service_id for sc in sla_cache_create]).delete()
+    # create all SlaCache objects in bulk.
+    SlaCache.objects.bulk_create(sla_cache_create)
 
 
 # calculate SLA for particular day and selected service
@@ -116,19 +128,3 @@ def _calculate_cache(service, yesterday):
         sla = (100 - (failing_time / (ONE_DAY_SECONDS * delta_days.days) * 100))
     return sla
 
-
-def _save_sla_to_cache(service, sla7d, sla1m, sla3m):
-    """
-    Save SLA value for specific Service into SlaCache.
-
-    :param service: Service objects,
-    :param sla7d: SLA value for 7 days
-    :param sla1m: SLA value for 1 month
-    :param sla3m: SLA value for 3 months
-    """
-    sla_cache = SlaCache(service_id=service.id,
-                         sla7days=sla7d,
-                         sla1month=sla1m,
-                         sla3months=sla3m)
-    # django automatically create new one or update SlaCache object
-    sla_cache.save()
