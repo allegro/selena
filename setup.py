@@ -29,7 +29,7 @@ setup(
         "lck.django==0.8.9",
         "MySQL-python==1.2.3",
         "South==0.7.6",
-        "pycurl==7.18.1",
+        "pycurl==7.18.2",
         "django-tastypie==0.9.14",
         "rq==0.3.8",
         "django-rq==0.5.1",

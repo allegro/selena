@@ -104,6 +104,11 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
+        'services.sla': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
     }
 }
 DEFAULT_LIST_ITEMS_PER_PAGE = 60

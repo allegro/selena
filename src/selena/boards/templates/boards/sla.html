@@ -1,0 +1,9 @@
+{% extends "boards/index.html" %}
+{% load i18n %}
+
+{% block sla %}
+    SLA:
+        {% blocktrans with sla=item.sla7days %}7d: <strong>{{ sla }}%</strong> {% endblocktrans %}
+        {% blocktrans with sla=item.sla1month %}1m: <strong>{{ sla }}%</strong> {% endblocktrans %}
+        {% blocktrans with sla=item.sla3months %}3m: <strong>{{ sla }}%</strong> {% endblocktrans %}
+{% endblock sla %}

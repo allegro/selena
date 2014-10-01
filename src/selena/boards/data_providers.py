@@ -39,9 +39,13 @@ def _get_index_data_sql(classification, errors_only, services):
             ) AS have_problems,
             ROUND(MIN(SH.response_time), 2) AS min_response_time,
             ROUND(MAX(SH.response_time), 2) AS max_response_time,
-            ROUND(AVG(SH.response_time), 2) AS avg_response_time
+            ROUND(AVG(SH.response_time), 2) AS avg_response_time,
+            C.sla7days,
+            C.sla1month,
+            C.sla3months
         FROM services_servicehistory AS SH
         JOIN services_service AS S ON S.id=SH.service_id
+        JOIN services_slacache AS C ON C.service_id=SH.service_id
         WHERE SH.created>=%s AND SH.created<=%s AND S.is_active=1 {} {}
         GROUP BY S.name
         {}

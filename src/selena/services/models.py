@@ -335,3 +335,29 @@ class ServiceHistoryArchive(models.Model):
 
     class Meta:
         ordering = ['-created']
+
+class SlaDaily(models.Model):
+    service_id = models.PositiveIntegerField(_('service_id'), db_index=True)
+    day = models.DateTimeField(_('day'), auto_now_add=False, auto_now=False)
+    sla = models.FloatField(_('sla'), blank=True, null=True)
+
+    def __unicode__(self):
+        return u'%s, %s, %s' % (self.service_id, self.day, self.sla)
+
+    class Meta:
+        verbose_name = _('SLA daily')
+        verbose_name_plural = _('SLAs daily')
+
+class SlaCache(models.Model):
+    service_id = models.PositiveIntegerField(_('service_id'), primary_key=True)
+    sla7days = models.FloatField(_('sla7days'), blank=True, null=True)
+    sla1month = models.FloatField(_('sla1month'), blank=True, null=True)
+    sla3months = models.FloatField(_('sla3months'), blank=True, null=True)
+
+    def __unicode__(self):
+        return u'%s, %s, %s, %s' % (self.service_id, self.sla7days, self.sla1month, self.sla3months)
+
+    class Meta:
+        verbose_name = _('SLA cache')
+        verbose_name_plural = _('SLAs cache')
+
