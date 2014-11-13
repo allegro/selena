@@ -23,26 +23,40 @@ ONE_DAY_SECONDS = datetime.timedelta(days=1).total_seconds()
 logger = logging.getLogger(__name__)
 
 
+def get_slacache(service):
+    """Generate the SLA cache for a single service.
+    :param Service service: service, for which we want to generate the cache
+    :return: SlaCache for a given service
+    """
+    last_day = _find_start_date(service)
+    diff = datetime.date.today() - last_day
+    for day in range(diff.days):
+        if day > 0:
+            _calculate_SLA(day, service)
+
+    sla7d = '%.2f' % _calculate_cache(service, timezone.now() - datetime.timedelta(days=WEEK))
+    sla1m = '%.2f' % _calculate_cache(service, timezone.now() + relativedelta(months=-ONE_MONTH))
+    sla3m = '%.2f' % _calculate_cache(service, timezone.now() + relativedelta(months=-THREE_MONTHS))
+    try:
+        out = SlaCache(
+            service_id=service.id,
+            sla7days=sla7d,
+            sla1month=sla1m,
+            sla3months=sla3m
+        )
+        return out
+    except Exception as ex:
+        logger.error("Something bad happened. %s" % ex)
+
+
 def calculatesla():
     # SlaCache object for bulk create
     sla_cache_create = []
 
     services = Service.objects.filter(is_active=True).only('id').order_by('id')
     for service in services:
-        last_day = _find_start_date(service)
-        diff = datetime.date.today() - last_day
-        for day in range(diff.days):
-            if day > 0:
-                _calculate_SLA(day, service)
-
-        sla7d = '%.2f' % _calculate_cache(service, timezone.now() - datetime.timedelta(days=WEEK))
-        sla1m = '%.2f' % _calculate_cache(service, timezone.now() + relativedelta(months=-ONE_MONTH))
-        sla3m = '%.2f' % _calculate_cache(service, timezone.now() + relativedelta(months=-THREE_MONTHS))
         # create SlaCache and append it to list
-        sla_cache_create.append(SlaCache(service_id=service.id,
-                                         sla7days=sla7d,
-                                         sla1month=sla1m,
-                                         sla3months=sla3m))
+        sla_cache_create.append(get_slacache(service))
 
     # delete all cache objects.
     SlaCache.objects.filter(pk__in=[sc.service_id for sc in sla_cache_create]).delete()
