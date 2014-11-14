@@ -2,7 +2,6 @@
 
 from django.dispatch import receiver, Signal
 from django.db.models.signals import post_save
-from services.sla import get_slacache
 from services.models import Service, SlaCache
 
 
@@ -12,6 +11,7 @@ def precache_sla(sender, **kwargs):
     service = kwargs['instance']
     if len(SlaCache.objects.filter(service_id=service.id)) == 0:
         # new service - let's generate the cache...
+        from services.sla import get_slacache
         slacache = get_slacache(service)
         slacache.save()
 
