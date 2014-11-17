@@ -25,7 +25,7 @@ setup(
     author_email='it-ralph-dev@allegro.pl',
     license='Apache Software License v2.0',
     install_requires=[
-        "django==1.5.2",
+        "django==1.5.11",
         "lck.django==0.8.10",
         "MySQL-python==1.2.5",
         "South==1.0.1",
