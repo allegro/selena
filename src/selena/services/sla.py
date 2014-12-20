@@ -5,7 +5,7 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from django.db.models.aggregates import Count
+from django.db.models.aggregates import Min
 
 from services.models import (Service, SlaDaily, SlaCache, ServiceHistory)
 from django.utils import timezone
@@ -64,12 +64,12 @@ def _calculate_SLA(offset, service):
     # retrieve history. It take into account situation where one agent has a failure
     # and there is, at least, another one agent which reports success.
 
-    service_history = ServiceHistory.objects.values('created', 'response_state').\
+    service_history = ServiceHistory.objects.values('created').\
         filter(service_id=service.id).\
         filter(created__gt=local_start_time).\
         filter(created__lt=local_stop_time).\
         filter(response_state__lt=5).\
-        annotate(gr=Count('created')).\
+        annotate(response_state=Min('response_state')).\
         order_by('created', 'response_state')
 
     aggregated_failing_time_sec = 0
