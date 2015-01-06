@@ -361,3 +361,5 @@ class SlaCache(models.Model):
         verbose_name = _('SLA cache')
         verbose_name_plural = _('SLAs cache')
 
+
+from services.signals import precache_sla
