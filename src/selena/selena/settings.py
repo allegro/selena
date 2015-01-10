@@ -8,16 +8,10 @@ from __future__ import unicode_literals
 
 import os
 
-from lck.django import current_dir_support
-
-execfile(current_dir_support)
-from lck.django import namespace_package_support
-execfile(namespace_package_support)
-from datetime import timedelta
-
 
 DEBUG = False
-PROJECT_DIR = CURRENT_DIR + '/../'
+CURRENT_DIR = os.path.realpath(os.path.dirname(__file__))
+PROJECT_DIR = os.path.join(CURRENT_DIR, '..')
 TEMPLATE_DEBUG = DEBUG
 ALLOWED_HOSTS = []
 ADMINS = ()
@@ -39,13 +33,13 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 SECRET_KEY = None
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    # 'django.template.loaders.eggs.Loader',
 )
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -130,5 +124,15 @@ RQ_QUEUES = None
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 
-from lck.django import profile_support
-execfile(profile_support)
+_django_settings_dir = os.environ.get('DJANGO_SETTINGS_DIR', CURRENT_DIR)
+SETTINGS_PATH_PREFIX = os.path.join(_django_settings_dir, 'settings')
+local_profile = os.environ.get('DJANGO_SETTINGS_PROFILE', 'local')
+local_settings = '%s-%s.py' % (SETTINGS_PATH_PREFIX, local_profile)
+selena_settings_path = os.environ.get('SELENA_SETTINGS_PATH', '~/.selena')
+
+for cfg_loc in [local_settings, '{}/settings'.format(selena_settings_path),
+                '/etc/selena/settings']:
+    cfg_loc = os.path.expanduser(cfg_loc)
+    if os.path.exists(cfg_loc):
+        execfile(cfg_loc)
+        break
