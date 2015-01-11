@@ -14,7 +14,7 @@ from django.conf import settings
 from django.core.validators import MaxLengthValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from lck.django.choices import Choices
+from dj.choices import Choices
 from lck.django.common.models import Named
 
 from services.utils import get_salt
