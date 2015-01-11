@@ -15,6 +15,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MaxLengthValidator
 from django.forms.models import BaseInlineFormSet
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ungettext
 
 from services.helpers import Helper
 from services.models import (
@@ -86,10 +87,11 @@ class AdditionalRequestParamInLine(admin.StackedInline):
 
 
 class ServiceAdminForm(forms.ModelForm):
-    user = forms.CharField(_('user'), required=False)
-    password = forms.CharField(_('password'), required=False)
+    user = forms.CharField(required=False, label=_('User'))
+    password = forms.CharField(required=False, label=_('Password'))
     response_code = forms.CharField(
         max_length=3, initial=200, help_text=Helper().custom_status_helper(),
+        label=_('Response code')
     )
 
     class Meta:
@@ -136,65 +138,63 @@ class ServiceAdminForm(forms.ModelForm):
 class ServiceAdmin(admin.ModelAdmin):
     def activate_active_flag(self, request, queryset):
         rows_updated = queryset.update(is_active=1)
-        if rows_updated == 1:
-            message_bit = "1 services was"
-        else:
-            message_bit = "%s services were" % rows_updated
-        self.message_user(
-            request,
-            "%s successfully marked as active." % message_bit,
-        )
+        message = ungettext("1 service was successfully marked as active.",
+                            "{rows_updated} services were successfully marked"
+                            " as active.",
+                            rows_updated).format(rows_updated=rows_updated)
+        self.message_user(request, message)
 
     activate_active_flag.short_description = _("Activate")
 
     def deactivate_active_flag(self, request, queryset):
         rows_updated = queryset.update(is_active=0)
-        if rows_updated == 1:
-            message_bit = "1 services was"
-        else:
-            message_bit = "%s services were" % rows_updated
+        message = ungettext("1 service was successfully marked as inactive.",
+                            "{rows_updated} services were successfully marked"
+                            " as inactive.",
+                            rows_updated).format(rows_updated=rows_updated)
         self.message_user(
             request,
-            "%s successfully marked as unactive." % message_bit,
+            message
         )
 
     deactivate_active_flag.short_description = _("Deactivate")
 
     def activate_core_services_flag(self, request, queryset):
         rows_updated = queryset.update(is_core_service=1)
-        if rows_updated == 1:
-            message_bit = "1 services was"
-        else:
-            message_bit = "%s services were" % rows_updated
+        message = ungettext("1 service was successfully marked as core.",
+                            "{rows_updated} services were successfully marked"
+                            " as core.",
+                            rows_updated).format(rows_updated=rows_updated)
         self.message_user(
             request,
-            "%s successfully marked as core." % message_bit,
+            message
         )
 
     activate_core_services_flag.short_description = _("Mark as core")
 
     def deactivate_core_services_flag(self, request, queryset):
         rows_updated = queryset.update(is_core_service=0)
-        if rows_updated == 1:
-            message_bit = "1 services was"
-        else:
-            message_bit = "%s services were" % rows_updated
+        message = ungettext("1 service was successfully marked as not core.",
+                     "{rows_updated} services were successfully marked as"
+                     " not core.",
+                     rows_updated).format(rows_updated=rows_updated)
         self.message_user(
             request,
-            "%s successfully marked as not core." % message_bit,
+            message
         )
 
     deactivate_core_services_flag.short_description = _("Mark as not core")
 
     def activate_technical_break_flag(self, request, queryset):
         rows_updated = queryset.update(is_technical_break=1)
-        if rows_updated == 1:
-            message_bit = "1 services was"
-        else:
-            message_bit = "%s services were" % rows_updated
+        message = ungettext("1 service was successfully switched to technical"
+                            " break state.",
+                            "{rows_updated} services were successfully"
+                            " switched to technical break state.",
+                            rows_updated).format(rows_updated=rows_updated)
         self.message_user(
             request,
-            "%s successfully switched to technical break state." % message_bit,
+            message
         )
 
     activate_technical_break_flag.short_description = \
@@ -202,13 +202,14 @@ class ServiceAdmin(admin.ModelAdmin):
 
     def deactivate_technical_break_flag(self, request, queryset):
         rows_updated = queryset.update(is_technical_break=0)
-        if rows_updated == 1:
-            message_bit = "1 services was"
-        else:
-            message_bit = "%s services were" % rows_updated
+        message = ungettext("1 service was successfully switched to"
+                            " active state.",
+                            "{rows_updated} services were successfully"
+                            " switched to active state.",
+                            rows_updated).format(rows_updated=rows_updated)
         self.message_user(
             request,
-            "%s successfully to active state." % message_bit,
+            message
         )
 
     deactivate_technical_break_flag.short_description = \
@@ -216,26 +217,27 @@ class ServiceAdmin(admin.ModelAdmin):
 
     def activate_hosting_flag(self, request, queryset):
         rows_updated = queryset.update(hosting=1)
-        if rows_updated == 1:
-            message_bit = "1 services was"
-        else:
-            message_bit = "%s services were" % rows_updated
+        message = ungettext("1 service was successfully marked as hosting.",
+                            "{rows_updated} services were successfully marked"
+                            " as hosting.",
+                            rows_updated).format(rows_updated=rows_updated)
         self.message_user(
             request,
-            "%s successfully marked as hosting." % message_bit,
+            message
         )
 
     activate_hosting_flag.short_description = _("Mark as hosting")
 
     def deactivate_hosting_flag(self, request, queryset):
         rows_updated = queryset.update(hosting=0)
-        if rows_updated == 1:
-            message_bit = "1 services was"
-        else:
-            message_bit = "%s services were" % rows_updated
+        message = ungettext(
+            "1 service was successfully marked as not hosting.",
+            "{rows_updated} services were successfully marked as"
+            " not hosting.",
+            rows_updated).format(rows_updated=rows_updated)
         self.message_user(
             request,
-            "%s successfully market as not hosting." % message_bit,
+            message
         )
 
     deactivate_hosting_flag.short_description = _("Mark as not hosting")

@@ -227,6 +227,9 @@ class MonitoredPhrase(models.Model):
         verbose_name=_('service')
     )
 
+    class Meta:
+        verbose_name = _("Monitored Phrase")
+        verbose_name_plural = _("Monitored Phrases")
 
 class AdditionalRequestParam(models.Model):
     name = models.CharField(_('name'), max_length=250)
@@ -240,6 +243,10 @@ class AdditionalRequestParam(models.Model):
         on_delete=models.CASCADE,
         verbose_name=_('service')
     )
+
+    class Meta:
+        verbose_name = _("Additional Request Parameter")
+        verbose_name_plural = _("Additional Request Parameters")
 
 
 class ResponseStateChoices(Choices):
