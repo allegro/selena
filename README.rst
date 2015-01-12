@@ -103,10 +103,18 @@ To function properly, Selena needs `Selena-agent <http://github.com/allegro/sele
 
 
 Configuration
-~~~~~~~~~~~~~
+=============
 
-Create file /INSTALL_DIR/src/selena/selena/settings-local.py and fill in the appropriate
-data.
+You can configure Selena by using the following config files (in that order):
+
+ * `/INSTALL_DIR/src/selena/selena/settings-local.py`
+ * by setting the environment variable `SELENA_SETTINGS_PATH` and creating a
+   `settings-local.py` file in that location (if set, overrides the above file)
+ * `~/.selena/settings`
+ * `/etc/selena/settings`
+
+These files will be included at the bottom of `settings.py` overriding the
+default values if necessary.
 
 Fill MySQL connection data::
 
