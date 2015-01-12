@@ -83,6 +83,15 @@ def _get_agent_by_id(agent_id):
     return agent
 
 def _fill_test_arguments(service, monitored_phrases, main_agent, agent, param):
+    """A util function created to generate set of arguments for run_test() function.
+
+    :param service: service, for which we want to generate monitoring parameters
+    :param monitored_phrases: an optional, part of return body phrase
+    :param main_agent: default agent who make monitoring tests
+    :param agent: a list of predefined agents who make monitoring tests
+    :param param: a set of additional monitoring parameters like GET, POST parameters
+    :return: dictionary with set of run_test() function arguments
+    """
     return {
         'url': '%s%s' % (service.url, _prepare_get_data(param.get, service.url)) if param else service.url,
         'useragent': param.useragent if param else service.base_useragent,
@@ -100,7 +109,6 @@ def _fill_test_arguments(service, monitored_phrases, main_agent, agent, param):
         'connection_timeout': service.connection_timeout,
         'response_code': service.response_code,
         'performance_issues_time': service.performance_issues_time,
-        'connection_timeout': service.connection_timeout,
     }
 
 
