@@ -102,7 +102,7 @@ class CustomToManyField(fields.ToManyField):
         self.filter_args_func = filter_args_func
         self.filter_kwargs_func = filter_kwargs_func
 
-    def dehydrate(self, bundle):
+    def dehydrate(self, bundle, for_list=True):
         if not bundle.obj or not bundle.obj.pk:
             if not self.null:
                 raise ApiFieldError(
@@ -131,7 +131,7 @@ class CustomToManyField(fields.ToManyField):
             m2m_bundle = Bundle(obj=m2m, request=bundle.request)
             self.m2m_resources.append(m2m_resource)
             m2m_dehydrated.append(
-                self.dehydrate_related(m2m_bundle, m2m_resource),
+                self.dehydrate_related(m2m_bundle, m2m_resource, for_list),
             )
 
         return m2m_dehydrated
