@@ -3,7 +3,7 @@
 {% load get_by_id %}
 
 {% block javascript %}
-    <script language="javascript" type="text/javascript" src="{% static "js/bootstrap-datepicker.js" %}"></script>
+    <script src="{% static "js/bootstrap-datepicker.js" %}"></script>
 {% endblock javascript %}
 
 {% block css %}
@@ -62,7 +62,7 @@
         </div>
     </div>
 
-    <script language="javascript" type="text/javascript">
+    <script>
         $(document).ready(function() {
             $('#start_date').datepicker({format: 'yyyy-mm-dd'});
             $('#stop_date').datepicker({format: 'yyyy-mm-dd'});
