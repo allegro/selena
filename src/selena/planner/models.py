@@ -13,9 +13,9 @@ from services.models import Service
 
 
 class TechnicalBreak(models.Model):
-    short_desciption = models.CharField(_('short description'), max_length=250)
-    date_from = models.DateTimeField(_('date from'), db_index=True)
-    date_to = models.DateTimeField(_('date to'), db_index=True)
+    short_desciption = models.CharField(_('Short description'), max_length=250)
+    date_from = models.DateTimeField(_('Date from'), db_index=True)
+    date_to = models.DateTimeField(_('Date to'), db_index=True)
     activated = models.BooleanField(
         _('activated'),
         default=False,
@@ -24,7 +24,7 @@ class TechnicalBreak(models.Model):
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
 
     def __unicode__(self):
-        return "TechnicalBreak for %s" % (self.service.name)
+        return _("Technical Break for %s") % (self.service.name)
 
     class Meta:
         verbose_name = _('Technical break')

@@ -180,6 +180,18 @@ You also have to configure cache. Sample cache configuration (for default `memca
         }
     }
 
+Base workers
+~~~~~~~~~~~~
+
+When you finish configuring your queues you have to run an `rqworker` for each
+of the base queues (*planner*, *archiving*, *dispacher*, *monitors*, *stats*)
+on the system where Selena is installed.
+
+You run the worker by executing `selena rqworker <queue1_name> <queue2_name>`.
+
+For example::
+
+    selena rqworker default dispacher monitors archiving stats planner
 
 Database preparation
 ~~~~~~~~~~~~~~~~~~~~

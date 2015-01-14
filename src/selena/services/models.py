@@ -14,7 +14,7 @@ from django.conf import settings
 from django.core.validators import MaxLengthValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from lck.django.choices import Choices
+from dj.choices import Choices
 from lck.django.common.models import Named
 
 from services.utils import get_salt
@@ -227,6 +227,9 @@ class MonitoredPhrase(models.Model):
         verbose_name=_('service')
     )
 
+    class Meta:
+        verbose_name = _("Monitored Phrase")
+        verbose_name_plural = _("Monitored Phrases")
 
 class AdditionalRequestParam(models.Model):
     name = models.CharField(_('name'), max_length=250)
@@ -240,6 +243,10 @@ class AdditionalRequestParam(models.Model):
         on_delete=models.CASCADE,
         verbose_name=_('service')
     )
+
+    class Meta:
+        verbose_name = _("Additional Request Parameter")
+        verbose_name_plural = _("Additional Request Parameters")
 
 
 class ResponseStateChoices(Choices):
