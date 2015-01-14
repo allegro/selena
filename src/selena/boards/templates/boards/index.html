@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block javascript %}
-    <script language="javascript" type="text/javascript" src="{% static "js/dashboard.js" %}"></script>
+    <script src="{% static "js/dashboard.js" %}"></script>
 {% endblock javascript %}
 
 {% block content %}
@@ -35,7 +35,7 @@
         {% endif %}
     {% endfor %}
 
-    <script language="javascript" type="text/javascript">
+    <script>
         $(document).ready(function() {
             Base.reloadDashboard();
         });
