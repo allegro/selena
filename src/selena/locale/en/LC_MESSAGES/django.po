@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-11 14:12+0100\n"
+"POT-Creation-Date: 2015-07-31 10:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -152,8 +152,8 @@ msgstr ""
 msgid "Performance"
 msgstr ""
 
-#: boards/templates/boards/history_table.html:35
-msgid "Serice is working incorrectly"
+#: boards/templates/boards/history_table.html:35 services/models.py:257
+msgid "Service is working incorrectly"
 msgstr ""
 
 #: boards/templates/boards/history_table.html:35
@@ -757,10 +757,6 @@ msgstr ""
 
 #: services/models.py:256
 msgid "Performance issues"
-msgstr ""
-
-#: services/models.py:257
-msgid "Service is working incorrectly"
 msgstr ""
 
 #: services/models.py:258
