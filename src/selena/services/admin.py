@@ -254,7 +254,7 @@ class ServiceAdmin(admin.ModelAdmin):
                                   'time_delta',
                                   'base_useragent',
                                   'base_referer']}),
-        (_('Integration'), {'fields': ['maas_intkey', 'sc_id']}),
+        (_('Integration'), {'fields': ['maas_integration_key', 'sc_id']}),
         (_('Additional agents'), {'fields': ['additional_agents']}),
         (_('Authentication'), {'fields': ['auth_method', 'user', 'password']}),
     ]

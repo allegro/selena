@@ -124,11 +124,6 @@ RQ_QUEUES = None
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 
-ACTIONEAR_NOTIFICATIONS_CLIENT = 'selena'
-ACTIONEAR_NOTIFICATIONS_CLIENTURL = None
-ACTIONEAR_URL = None
-
-
 _django_settings_dir = os.environ.get('DJANGO_SETTINGS_DIR', CURRENT_DIR)
 SETTINGS_PATH_PREFIX = os.path.join(_django_settings_dir, 'settings')
 local_profile = os.environ.get('DJANGO_SETTINGS_PROFILE', 'local')

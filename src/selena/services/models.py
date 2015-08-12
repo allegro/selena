@@ -159,7 +159,7 @@ class Service(models.Model):
         choices=AuthMethodChoices(),
         default=AuthMethodChoices.none.id,
     )
-    maas_intkey = models.CharField(
+    maas_integration_key = models.CharField(
         _('MaaS Integration Key'),
         max_length=32,
         blank=True,

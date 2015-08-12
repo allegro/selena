@@ -8,8 +8,8 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'Service.maas_intkey'
-        db.add_column(u'services_service', 'maas_intkey',
+        # Adding field 'Service.maas_integration_key'
+        db.add_column(u'services_service', 'maas_integration_key',
                       self.gf('django.db.models.fields.CharField')(max_length=32, null=True, blank=True),
                       keep_default=False)
 
@@ -20,8 +20,8 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        # Deleting field 'Service.maas_intkey'
-        db.delete_column(u'services_service', 'maas_intkey')
+        # Deleting field 'Service.maas_integration_key'
+        db.delete_column(u'services_service', 'maas_integration_key')
 
         # Deleting field 'Service.sc_id'
         db.delete_column(u'services_service', 'sc_id')
@@ -76,7 +76,7 @@ class Migration(SchemaMigration):
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'db_index': 'True'}),
             'is_core_service': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'db_index': 'True'}),
             'is_technical_break': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'db_index': 'True'}),
-            'maas_intkey': ('django.db.models.fields.CharField', [], {'max_length': '32', 'null': 'True', 'blank': 'True'}),
+            'maas_integration_key': ('django.db.models.fields.CharField', [], {'max_length': '32', 'null': 'True', 'blank': 'True'}),
             'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'auto_now_add': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '200', 'db_index': 'True'}),
             'order': ('django.db.models.fields.PositiveIntegerField', [], {'default': '100'}),
