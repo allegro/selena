@@ -159,7 +159,7 @@ class ServiceResource(ModelResource):
     class Meta:
         queryset = Service.objects.filter(is_active=True)
         resource_name = 'services'
-        fields = ['id', 'name', 'url']
+        fields = ['id', 'name', 'url', 'maas_integration_key', 'sc_id']
         allowed_methods = ['get']
         filtering = {
             'id': ['exact'],
