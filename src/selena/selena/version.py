@@ -7,5 +7,5 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 
-VERSION = (1, 0, 4)
+VERSION = (1, 0, 5)
 

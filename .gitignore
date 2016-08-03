@@ -3,3 +3,5 @@
 *.swp
 .settings
 settings-local.py
+*.idea
+*.egg-info
