@@ -13,7 +13,6 @@ class Migration(SchemaMigration):
     def backwards(self, orm):
         db.rename_column(u'services_service', 'debounce', 'service_working_min_probes_count')
 
-
     models = {
         u'services.additionalrequestparam': {
             'Meta': {'object_name': 'AdditionalRequestParam'},
@@ -64,11 +63,13 @@ class Migration(SchemaMigration):
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'db_index': 'True'}),
             'is_core_service': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'db_index': 'True'}),
             'is_technical_break': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'db_index': 'True'}),
+            'maas_integration_key': ('django.db.models.fields.CharField', [], {'max_length': '32', 'null': 'True', 'blank': 'True'}),
             'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'auto_now_add': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '200', 'db_index': 'True'}),
             'order': ('django.db.models.fields.PositiveIntegerField', [], {'default': '100'}),
             'performance_issues_time': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '15'}),
             'response_code': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '200'}),
+            'sc_id': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True', 'blank': 'True'}),
             'sensitivity': ('django.db.models.fields.DecimalField', [], {'default': "'0.5'", 'max_digits': '3', 'decimal_places': '2'}),
             'time_delta': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '3'}),
             'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
