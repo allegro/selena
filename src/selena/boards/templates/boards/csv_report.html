@@ -1,9 +1,9 @@
 {% extends "boards/base.html" %}
 {% load staticfiles %}
 {% load get_by_id %}
-
+{% load i18n %}
 {% block javascript %}
-    <script language="javascript" type="text/javascript" src="{% static "js/bootstrap-datepicker.js" %}"></script>
+    <script src="{% static "js/bootstrap-datepicker.js" %}"></script>
 {% endblock javascript %}
 
 {% block css %}
@@ -11,7 +11,7 @@
 {% endblock css %}
 
 {% block content %}
-    <h1>Errors report</h1>
+    <h1>{% trans "Errors report" %}</h1>
 
     <div class="row-fluid">
         <div class="span12 well">
@@ -62,10 +62,11 @@
         </div>
     </div>
 
-    <script language="javascript" type="text/javascript">
+    <script>
         $(document).ready(function() {
             $('#start_date').datepicker({format: 'yyyy-mm-dd'});
             $('#stop_date').datepicker({format: 'yyyy-mm-dd'});
         });
     </script>
 {% endblock content %}
+

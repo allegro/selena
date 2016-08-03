@@ -30,7 +30,6 @@ from services.models import (
 
 PREPARE_GET_REG = re.compile(r'.*\?[a-zA-Z0-9]+=.+')
 
-
 class MainAgentDoesNotExist(Exception):
     pass
 
@@ -83,101 +82,59 @@ def _get_agent_by_id(agent_id):
             return
     return agent
 
+def _fill_test_arguments(service, monitored_phrases, main_agent, agent, param):
+    """A util function created to generate set of arguments for run_test() function.
+
+    :param service: service, for which we want to generate monitoring parameters
+    :param monitored_phrases: an optional, part of return body phrase
+    :param main_agent: default agent who make monitoring tests
+    :param agent: a list of predefined agents who make monitoring tests
+    :param param: a set of additional monitoring parameters like GET, POST parameters
+    :return: dictionary with set of run_test() function arguments
+    """
+    return {
+        'url': '%s%s' % (service.url, _prepare_get_data(param.get, service.url)) if param else service.url,
+        'useragent': param.useragent if param else service.base_useragent,
+        'agent_queue_name': agent.queue.name if agent else main_agent.queue.name,
+        'agent_id': agent.id if agent else main_agent.id,
+        'referer': param.referer if param else service.base_referer,
+        'arp_id': param.id if param else None,
+        'auth': {
+            'method': service.auth_method,
+            'user': service.user,
+            'password': service.password,
+            },
+        'post': param.post if param else None,
+        'monitored_phrases': monitored_phrases,
+        'connection_timeout': service.connection_timeout,
+        'response_code': service.response_code,
+        'performance_issues_time': service.performance_issues_time,
+    }
+
 
 def _get_test_cases(service, monitored_phrases=''):
     main_agent = _get_main_agent()
     if not main_agent:
         raise MainAgentDoesNotExist()
-    cases = [{
-        'url': service.url,
-        'useragent': service.base_useragent,
-        'agent_queue_name': main_agent.queue.name,
-        'agent_id': main_agent.id,
-        'referer': service.base_referer,
-        'arp_id': None,
-        'auth': {
-            'method': service.auth_method,
-            'user': service.user,
-            'password': service.password,
-        },
-        'post': None,
-        'monitored_phrases': monitored_phrases,
-        'connection_timeout': service.connection_timeout,
-        'response_code': service.response_code,
-        'performance_issues_time': service.performance_issues_time,
-        'connection_timeout': service.connection_timeout,
-    }]
+    cases = []
     params = service.additionalrequestparam_set.all()
-    for param in params:
-        cases.append({
-            'url': '%s%s' % (
-                service.url,
-                _prepare_get_data(param.get, service.url),
-            ),
-            'useragent': param.useragent,
-            'agent_queue_name': main_agent.queue.name,
-            'agent_id': main_agent.id,
-            'referer': param.referer,
-            'arp_id': param.id,
-            'auth': {
-                'method': service.auth_method,
-                'user': service.user,
-                'password': service.password,
-            },
-            'post': param.post,
-            'monitored_phrases': monitored_phrases,
-            'connection_timeout': service.connection_timeout,
-            'response_code': service.response_code,
-            'performance_issues_time': service.performance_issues_time,
-            'connection_timeout': service.connection_timeout,
-        })
+
+    if params:
+        for param in params:
+            cases.append(_fill_test_arguments(service, monitored_phrases, main_agent, None, param))
+    else:
+        cases.append(_fill_test_arguments(service, monitored_phrases, main_agent, None, None))
+
     for agent in service.additional_agents.filter(
         is_active=True,
     ).exclude(
         is_main=True,
     ):
-        cases.append({
-            'url': service.url,
-            'useragent': service.base_useragent,
-            'agent_queue_name': agent.queue.name,
-            'agent_id': agent.id,
-            'referer': service.base_referer,
-            'arp_id': None,
-            'auth': {
-                'method': service.auth_method,
-                'user': service.user,
-                'password': service.password,
-            },
-            'post': None,
-            'monitored_phrases': monitored_phrases,
-            'connection_timeout': service.connection_timeout,
-            'response_code': service.response_code,
-            'performance_issues_time': service.performance_issues_time,
-            'connection_timeout': service.connection_timeout,
-        })
-        for param in params:
-            cases.append({
-                'url': '%s%s' % (
-                    service.url,
-                    _prepare_get_data(param.get, service.url),
-                ),
-                'useragent': param.useragent,
-                'agent_queue_name': agent.queue.name,
-                'agent_id': agent.id,
-                'referer': param.referer,
-                'arp_id': param.id,
-                'auth': {
-                    'method': service.auth_method,
-                    'user': service.user,
-                    'password': service.password,
-                },
-                'post': param.post,
-                'monitored_phrases': monitored_phrases,
-                'connection_timeout': service.connection_timeout,
-                'response_code': service.response_code,
-                'performance_issues_time': service.performance_issues_time,
-                'connection_timeout': service.connection_timeout,
-            })
+        if params:
+            for param in params:
+                cases.append(_fill_test_arguments(service, monitored_phrases, main_agent, agent, param))
+        else:
+            cases.append(_fill_test_arguments(service, monitored_phrases, main_agent, agent, None))
     return cases
 
 

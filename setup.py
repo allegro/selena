@@ -26,6 +26,7 @@ setup(
     license='Apache Software License v2.0',
     install_requires=[
         "django==1.5.11",
+        "dj.choices==0.9.2",
         "lck.django==0.8.10",
         "MySQL-python==1.2.5",
         "South==1.0.1",

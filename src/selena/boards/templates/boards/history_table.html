@@ -32,7 +32,7 @@
                     <td>{{ item.created|date:"Y-m-d H:i" }}</td>
                     <td class="{% if item.response_state > 1%}with-error-msg{% endif %}">
                         <span class="label {% if item.response_state == 2 %}label-warning{% elif item.response_state == 3 %}label-important{% elif item.response_state == 4 %}label-success{% elif item.response_state == 5 %}label-inverse{% endif %}">
-                            {% if item.response_state == 1 %}{% trans "OK" %}{% elif item.response_state == 2 %}{% trans "Performance" %}{% elif item.response_state == 3 %}{% trans "Serice is working incorrectly" %}{% elif item.response_state == 4 %}{% trans "Wordchecks errors" %}{% else %}{% trans "Agent fail" %}{% endif %}
+                            {% if item.response_state == 1 %}{% trans "OK" %}{% elif item.response_state == 2 %}{% trans "Performance" %}{% elif item.response_state == 3 %}{% trans "Service is working incorrectly" %}{% elif item.response_state == 4 %}{% trans "Wordchecks errors" %}{% else %}{% trans "Agent fail" %}{% endif %}
                         </span>
                     </td>
                     <td>{{ item.response_code }}</td>
@@ -56,7 +56,7 @@
     </div>
 </div>
 
-<script language="javascript" type="text/javascript">
+<script>
     $(document).ready(function() {
         $('td.with-error-msg span.label').click(function () {
             var span = $(this);
@@ -73,3 +73,4 @@
         });
     });
 </script>
+
