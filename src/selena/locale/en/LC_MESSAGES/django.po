@@ -542,7 +542,7 @@ msgid "connection timeout"
 msgstr ""
 
 #: services/models.py:84
-msgid "service working min probes count"
+msgid "debounce"
 msgstr ""
 
 #: services/models.py:87

@@ -248,7 +248,7 @@ class ServiceAdmin(admin.ModelAdmin):
         (_('Params'), {'fields': ['sensitivity',
                                   'performance_issues_time',
                                   'connection_timeout',
-                                  'service_working_min_probes_count',
+                                  'debounce',
                                   'time_delta',
                                   'base_useragent',
                                   'base_referer']}),
