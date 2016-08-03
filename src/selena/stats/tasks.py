@@ -23,9 +23,7 @@ def _search_incidents():
     # checking if any incidents can be closed
     ok_services_ids = []
     for open_incident in Incident.objects.filter(is_closed=False):
-        working_min_probes_count = Service.objects.get(
-            pk=open_incident.service_id
-        ).debounce
+        working_min_probes_count = open_incident.service.debounce
         start_date = now - datetime.timedelta(minutes=working_min_probes_count)
         ret = get_real_problems_number(
             ServiceHistory.objects.filter(
