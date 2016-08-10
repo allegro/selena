@@ -80,8 +80,8 @@ class Service(models.Model):
         _('connection timeout'),
         editable=True,
         default=settings.DEFAULT_PARAMS_CONNECTION_TIMEOUT)
-    service_working_min_probes_count = models.PositiveSmallIntegerField(
-        _('service working min probes count'),
+    debounce = models.PositiveSmallIntegerField(
+        _('debounce'),
         default=settings.DEFAULT_SERVICE_WORKING_PROBES)
     time_delta = models.PositiveSmallIntegerField(
         _('time delta'),

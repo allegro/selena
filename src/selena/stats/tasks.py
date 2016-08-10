@@ -23,9 +23,7 @@ def _search_incidents():
     # checking if any incidents can be closed
     ok_services_ids = []
     for open_incident in Incident.objects.filter(is_closed=False):
-        working_min_probes_count = Service.objects.get(
-            pk=open_incident.service_id
-        ).service_working_min_probes_count
+        working_min_probes_count = open_incident.service.debounce
         start_date = now - datetime.timedelta(minutes=working_min_probes_count)
         ret = get_real_problems_number(
             ServiceHistory.objects.filter(
@@ -64,7 +62,7 @@ def _search_incidents():
         except Service.DoesNotExist:
             continue
         to_date = timezone.now()
-        since_date = to_date - datetime.timedelta(minutes=service.time_delta)
+        since_date = to_date - datetime.timedelta(minutes=service.debounce)
         ret = get_real_problems_number(
             ServiceHistory.objects.filter(
                 service_id=service.pk,
@@ -74,7 +72,7 @@ def _search_incidents():
             ok_mode=False,
             get_first_and_last_broken_probes=True,
         )
-        if ret['real_problems_number'] == service.time_delta:
+        if ret['real_problems_number'] == service.debounce:
             try:
                 incident = Incident.objects.get(
                     service=service,
