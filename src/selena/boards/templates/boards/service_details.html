@@ -3,15 +3,15 @@
 {% load i18n %}
 
 {% block javascript %}
-    <script language="javascript" type="text/javascript" src="{% static "js/jquery.jqplot.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/plugins/jqplot.logAxisRenderer.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/plugins/jqplot.canvasTextRenderer.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/plugins/jqplot.canvasAxisLabelRenderer.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/plugins/jqplot.canvasAxisTickRenderer.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/plugins/jqplot.dateAxisRenderer.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/plugins/jqplot.categoryAxisRenderer.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/plugins/jqplot.barRenderer.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/show.js" %}"></script>
+    <script src="{% static "js/jquery.jqplot.min.js" %}"></script>
+    <script src="{% static "js/plugins/jqplot.logAxisRenderer.min.js" %}"></script>
+    <script src="{% static "js/plugins/jqplot.canvasTextRenderer.min.js" %}"></script>
+    <script src="{% static "js/plugins/jqplot.canvasAxisLabelRenderer.min.js" %}"></script>
+    <script src="{% static "js/plugins/jqplot.canvasAxisTickRenderer.min.js" %}"></script>
+    <script src="{% static "js/plugins/jqplot.dateAxisRenderer.min.js" %}"></script>
+    <script src="{% static "js/plugins/jqplot.categoryAxisRenderer.min.js" %}"></script>
+    <script src="{% static "js/plugins/jqplot.barRenderer.min.js" %}"></script>
+    <script src="{% static "js/show.js" %}"></script>
 {% endblock javascript %}
 
 {% block css %}
@@ -74,8 +74,8 @@
                         <td>{{ service.base_referer }}</td>
                     </tr>
                     <tr>
-                        <td><strong>{% trans "Time delta" %}</strong></td>
-                        <td>{{ service.time_delta }}</td>
+                        <td><strong>{% trans "Debounce" %}</strong></td>
+                        <td>{{ service.debounce }}</td>
                     </tr>
                     <tr>
                         <td><strong>{% trans "Is core service?" %}</strong></td>
@@ -202,7 +202,7 @@
 
     {% include "boards/history_table.html" %}
 
-    <script language="javascript" type="text/javascript">
+    <script>
         $(document).ready(function() {
             var main_charts = {};
             {% for group in probes %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-31 12:22+0100\n"
+"POT-Creation-Date: 2015-07-31 10:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: boards/models.py:16 services/models.py:68 services/models.py:232
+#: boards/forms.py:17
+msgid "Start date"
+msgstr ""
+
+#: boards/forms.py:21
+msgid "Stop date"
+msgstr ""
+
+#: boards/forms.py:28
+msgid "Start time"
+msgstr ""
+
+#: boards/forms.py:32
+msgid "Stop time"
+msgstr ""
+
+#: boards/forms.py:39 services/models.py:211
+msgid "Service"
+msgstr ""
+
+#: boards/models.py:16 services/models.py:68 services/models.py:235
 msgid "name"
 msgstr ""
 
@@ -35,6 +55,10 @@ msgstr ""
 
 #: boards/templates/boards/base.html:39
 msgid "Manually defined"
+msgstr ""
+
+#: boards/templates/boards/csv_report.html:14
+msgid "Errors report"
 msgstr ""
 
 #: boards/templates/boards/full_history.html:16
@@ -120,7 +144,7 @@ msgstr ""
 msgid "AGENT"
 msgstr ""
 
-#: boards/templates/boards/history_table.html:35 services/models.py:248
+#: boards/templates/boards/history_table.html:35 services/models.py:255
 msgid "OK"
 msgstr ""
 
@@ -128,8 +152,8 @@ msgstr ""
 msgid "Performance"
 msgstr ""
 
-#: boards/templates/boards/history_table.html:35
-msgid "Serice is working incorrectly"
+#: boards/templates/boards/history_table.html:35 services/models.py:257
+msgid "Service is working incorrectly"
 msgstr ""
 
 #: boards/templates/boards/history_table.html:35
@@ -152,8 +176,8 @@ msgstr ""
 msgid "AVG"
 msgstr ""
 
-#: boards/templates/boards/probe_details.html:1
-msgid "Status"
+#: boards/templates/boards/probe_details.html:2
+msgid "Status:"
 msgstr ""
 
 #: boards/templates/boards/service_details.html:26
@@ -165,12 +189,12 @@ msgid "Base info"
 msgstr ""
 
 #: boards/templates/boards/service_details.html:39
-#: boards/templates/boards/service_details.html:128
+#: boards/templates/boards/service_details.html:140
 msgid "Param"
 msgstr ""
 
 #: boards/templates/boards/service_details.html:40
-#: boards/templates/boards/service_details.html:129
+#: boards/templates/boards/service_details.html:141
 msgid "Value"
 msgstr ""
 
@@ -218,53 +242,80 @@ msgstr ""
 msgid "Hosting?"
 msgstr ""
 
-#: boards/templates/boards/service_details.html:92
+#: boards/templates/boards/service_details.html:89
+msgid "7 days SLA"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:93
+msgid "1 month SLA"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:97
+msgid "3 months SLA"
+msgstr ""
+
+#: boards/templates/boards/service_details.html:104
 msgid "Comments"
 msgstr ""
 
-#: boards/templates/boards/service_details.html:96
+#: boards/templates/boards/service_details.html:108
 msgid "Monitored phrases"
 msgstr ""
 
-#: boards/templates/boards/service_details.html:101
+#: boards/templates/boards/service_details.html:113
 msgid "Phrase"
 msgstr ""
 
-#: boards/templates/boards/service_details.html:102
+#: boards/templates/boards/service_details.html:114
 msgid "Shall not be"
 msgstr ""
 
-#: boards/templates/boards/service_details.html:116
-#: boards/templates/boards/service_details.html:156
+#: boards/templates/boards/service_details.html:128
+#: boards/templates/boards/service_details.html:168
 msgid "List is empty..."
 msgstr ""
 
-#: boards/templates/boards/service_details.html:119
+#: boards/templates/boards/service_details.html:131
 msgid "Additional request params"
 msgstr ""
 
-#: boards/templates/boards/service_details.html:135 services/models.py:234
+#: boards/templates/boards/service_details.html:147 services/models.py:237
 msgid "USERAGENT"
 msgstr ""
 
-#: boards/templates/boards/service_details.html:139 services/models.py:235
+#: boards/templates/boards/service_details.html:151 services/models.py:238
 msgid "REFERER"
 msgstr ""
 
-#: boards/templates/boards/service_details.html:143
+#: boards/templates/boards/service_details.html:155
 msgid "GET"
 msgstr ""
 
-#: boards/templates/boards/service_details.html:148
+#: boards/templates/boards/service_details.html:160
 msgid "POST"
 msgstr ""
 
-#: boards/templates/boards/service_details.html:161
+#: boards/templates/boards/service_details.html:173
 msgid "Last hour response time"
 msgstr ""
 
-#: boards/templates/boards/service_details.html:175
+#: boards/templates/boards/service_details.html:187
 msgid "Other last hour times"
+msgstr ""
+
+#: boards/templates/boards/sla.html:6
+#, python-format
+msgid "7d: <strong>%(sla)s%%</strong> "
+msgstr ""
+
+#: boards/templates/boards/sla.html:7
+#, python-format
+msgid "1m: <strong>%(sla)s%%</strong> "
+msgstr ""
+
+#: boards/templates/boards/sla.html:8
+#, python-format
+msgid "3m: <strong>%(sla)s%%</strong> "
 msgstr ""
 
 #: boards/views/common.py:20
@@ -296,19 +347,24 @@ msgid "Admin panel"
 msgstr ""
 
 #: planner/models.py:16
-msgid "short description"
+msgid "Short description"
 msgstr ""
 
 #: planner/models.py:17
-msgid "date from"
+msgid "Date from"
 msgstr ""
 
 #: planner/models.py:18
-msgid "date to"
+msgid "Date to"
 msgstr ""
 
 #: planner/models.py:20
 msgid "activated"
+msgstr ""
+
+#: planner/models.py:27
+#, python-format
+msgid "Technical Break for %s"
 msgstr ""
 
 #: planner/models.py:30
@@ -393,83 +449,145 @@ msgstr ""
 msgid "click here to select response code"
 msgstr ""
 
-#: services/admin.py:52
+#: services/admin.py:53
 msgid ""
 "POST parameters must be given by pattern variable \"parameter=value\" or "
 "\"parameter1=value1&parameter2=value2\" for many"
 msgstr ""
 
-#: services/admin.py:65
+#: services/admin.py:66
 msgid ""
 "GET parameters must be given by pattern variable \"parameter=value\" or "
 "\"parameter1=value1&parameter2=value2\" for many"
 msgstr ""
 
-#: services/admin.py:73
+#: services/admin.py:74
 msgid "Enter: USERAGENT, REFERER, POST or GET"
 msgstr ""
 
-#: services/admin.py:89
-msgid "user"
-msgstr ""
-
 #: services/admin.py:90
-msgid "password"
+msgid "User"
 msgstr ""
 
-#: services/admin.py:112 services/admin.py:118
+#: services/admin.py:91
+msgid "Password"
+msgstr ""
+
+#: services/admin.py:94
+msgid "Response code"
+msgstr ""
+
+#: services/admin.py:114 services/admin.py:120
 msgid "Max acceptable value is 30."
 msgstr ""
 
-#: services/admin.py:124
+#: services/admin.py:126
 msgid "Max acceptable value is 1."
 msgstr ""
 
-#: services/admin.py:148
+#: services/admin.py:141
+#, python-brace-format
+msgid "1 service was successfully marked as active."
+msgid_plural "{rows_updated} services were successfully marked as active."
+msgstr[0] ""
+msgstr[1] ""
+
+#: services/admin.py:147
 msgid "Activate"
 msgstr ""
 
-#: services/admin.py:161
+#: services/admin.py:151
+#, python-brace-format
+msgid "1 service was successfully marked as inactive."
+msgid_plural "{rows_updated} services were successfully marked as inactive."
+msgstr[0] ""
+msgstr[1] ""
+
+#: services/admin.py:160
 msgid "Deactivate"
 msgstr ""
 
-#: services/admin.py:174
+#: services/admin.py:164
+#, python-brace-format
+msgid "1 service was successfully marked as core."
+msgid_plural "{rows_updated} services were successfully marked as core."
+msgstr[0] ""
+msgstr[1] ""
+
+#: services/admin.py:173
 msgid "Mark as core"
 msgstr ""
 
-#: services/admin.py:187
+#: services/admin.py:177
+#, python-brace-format
+msgid "1 service was successfully marked as not core."
+msgid_plural "{rows_updated} services were successfully marked as not core."
+msgstr[0] ""
+msgstr[1] ""
+
+#: services/admin.py:186
 msgid "Mark as not core"
 msgstr ""
+
+#: services/admin.py:190
+#, python-brace-format
+msgid "1 service was successfully switched to technical break state."
+msgid_plural ""
+"{rows_updated} services were successfully switched to technical break state."
+msgstr[0] ""
+msgstr[1] ""
 
 #: services/admin.py:201
 msgid "Switch to technical break state"
 msgstr ""
 
-#: services/admin.py:215
+#: services/admin.py:205
+#, python-brace-format
+msgid "1 service was successfully switched to active state."
+msgid_plural ""
+"{rows_updated} services were successfully switched to active state."
+msgstr[0] ""
+msgstr[1] ""
+
+#: services/admin.py:216
 msgid "Disable technical break state"
 msgstr ""
 
-#: services/admin.py:228
+#: services/admin.py:220
+#, python-brace-format
+msgid "1 service was successfully marked as hosting."
+msgid_plural "{rows_updated} services were successfully marked as hosting."
+msgstr[0] ""
+msgstr[1] ""
+
+#: services/admin.py:229
 msgid "Mark as hosting"
 msgstr ""
 
-#: services/admin.py:241
+#: services/admin.py:234
+#, python-brace-format
+msgid "1 service was successfully marked as not hosting."
+msgid_plural "{rows_updated} services were successfully marked as not hosting."
+msgstr[0] ""
+msgstr[1] ""
+
+#: services/admin.py:243
 msgid "Mark as not hosting"
 msgstr ""
 
-#: services/admin.py:248
+#: services/admin.py:250
 msgid "Params"
 msgstr ""
 
-#: services/admin.py:255
+#: services/admin.py:257
 msgid "Additional agents"
 msgstr ""
 
-#: services/admin.py:256
+#: services/admin.py:258
 msgid "Authentication"
 msgstr ""
 
-#: services/admin.py:294
+#: services/admin.py:296
 msgid "Inactive agent can not be set as the main."
 msgstr ""
 
@@ -542,7 +660,7 @@ msgid "connection timeout"
 msgstr ""
 
 #: services/models.py:84
-msgid "service working min probes count"
+msgid "debounce"
 msgstr ""
 
 #: services/models.py:87
@@ -605,10 +723,6 @@ msgstr ""
 msgid "auth method"
 msgstr ""
 
-#: services/models.py:211
-msgid "Service"
-msgstr ""
-
 #: services/models.py:212
 msgid "Services"
 msgstr ""
@@ -621,30 +735,86 @@ msgstr ""
 msgid "shall not be"
 msgstr ""
 
-#: services/models.py:227 services/models.py:241
+#: services/models.py:227 services/models.py:244
 msgid "service"
 msgstr ""
 
+#: services/models.py:231
+msgid "Monitored Phrase"
+msgstr ""
+
+#: services/models.py:232
+msgid "Monitored Phrases"
+msgstr ""
+
+#: services/models.py:248
+msgid "Additional Request Parameter"
+msgstr ""
+
 #: services/models.py:249
-msgid "Performance issues"
-msgstr ""
-
-#: services/models.py:250
-msgid "Service is working incorrectly"
-msgstr ""
-
-#: services/models.py:251
-msgid "Wordcheck error"
-msgstr ""
-
-#: services/models.py:252
-msgid "No response from agent"
+msgid "Additional Request Parameters"
 msgstr ""
 
 #: services/models.py:256
-msgid "service id"
+msgid "Performance issues"
 msgstr ""
 
 #: services/models.py:258
+msgid "Wordcheck error"
+msgstr ""
+
+#: services/models.py:259
+msgid "No response from agent"
+msgstr ""
+
+#: services/models.py:263
+msgid "service id"
+msgstr ""
+
+#: services/models.py:265
 msgid "response state"
+msgstr ""
+
+#: services/models.py:347 services/models.py:359
+msgid "service_id"
+msgstr ""
+
+#: services/models.py:348
+msgid "day"
+msgstr ""
+
+#: services/models.py:349
+msgid "sla"
+msgstr ""
+
+#: services/models.py:355
+msgid "SLA daily"
+msgstr ""
+
+#: services/models.py:356
+msgid "SLAs daily"
+msgstr ""
+
+#: services/models.py:360
+msgid "sla7days"
+msgstr ""
+
+#: services/models.py:361
+msgid "sla1month"
+msgstr ""
+
+#: services/models.py:362
+msgid "sla3months"
+msgstr ""
+
+#: services/models.py:368
+msgid "SLA cache"
+msgstr ""
+
+#: services/models.py:369
+msgid "SLAs cache"
+msgstr ""
+
+#: services/management/commands/calculatesla.py:16
+msgid "Calculate SLA for desired services"
 msgstr ""
